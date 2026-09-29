@@ -53,8 +53,8 @@ function Booker() {
   const [service, setService] = useState<Service | null>(null);
   const [shape, setShape] = useState<BrimShape>({
     preset: "Cattleman",
-    curve: PRESETS[0].curve,
-    pinch: PRESETS[0].pinch,
+    curve: PRESETS[0]!.curve,
+    pinch: PRESETS[0]!.pinch,
   });
   const [material, setMaterial] = useState<"felt" | "straw">("felt");
   const [size, setSize] = useState("Not sure, Sol will measure");

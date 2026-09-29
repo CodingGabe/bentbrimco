@@ -3,7 +3,7 @@ import { HatProfile } from "./HatProfile";
 import { PRESETS, type BrimShape } from "@/lib/shop/types";
 
 function nearestPreset(curve: number, pinch: number) {
-  let best = PRESETS[0];
+  let best = PRESETS[0]!;
   let d = Infinity;
   for (const p of PRESETS) {
     const dist = (p.curve - curve) ** 2 + (p.pinch - pinch) ** 2;

@@ -64,7 +64,7 @@ function seedBooking(spec: SeedSpec, base: Date): Booking {
   const svc = serviceById(spec.service);
   const d = startOfDay(new Date(base.getTime() + spec.dayOffset * DAY));
   d.setHours(Math.floor(spec.hour), (spec.hour % 1) * 60, 0, 0);
-  const preset = PRESETS[spec.preset ?? Math.floor(Math.random() * PRESETS.length)];
+  const preset = PRESETS[spec.preset ?? Math.floor(Math.random() * PRESETS.length)]!;
   const rush = spec.rush ?? false;
   return {
     id: nextId("bk"),
@@ -75,7 +75,7 @@ function seedBooking(spec: SeedSpec, base: Date): Booking {
     serviceId: spec.service,
     shape: { preset: preset.name, curve: preset.curve, pinch: preset.pinch },
     material: spec.material ?? "felt",
-    size: ["7", "7 1/4", "7 3/8", "Not sure"][Math.floor(Math.random() * 4)],
+    size: ["7", "7 1/4", "7 3/8", "Not sure"][Math.floor(Math.random() * 4)]!,
     deadline: rush
       ? new Date(d.getTime() + DAY).toISOString()
       : null,

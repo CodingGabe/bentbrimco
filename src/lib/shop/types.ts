@@ -89,7 +89,7 @@ export type Booking = {
   shape: BrimShape;
   material: "felt" | "straw";
   size: string;
-  photoName?: string;
+  photoName?: string | undefined;
   deadline: string | null; // ISO date
   rush: boolean;
   mode: "dropoff" | "bar";
@@ -102,9 +102,9 @@ export type Booking = {
   firstTime: boolean;
   repliedToReminder: boolean;
   createdAt: string;
-  readyAt?: string;
-  pickedAt?: string;
-  notes?: string;
+  readyAt?: string | undefined;
+  pickedAt?: string | undefined;
+  notes?: string | undefined;
 };
 
 export type ShopMessage = {
@@ -165,4 +165,4 @@ export const DEFAULT_RULES: ShopRules = {
 };
 
 export const serviceById = (id: ServiceId) =>
-  SERVICES.find((s) => s.id === id) ?? SERVICES[0];
+  SERVICES.find((s) => s.id === id) ?? SERVICES[0]!;

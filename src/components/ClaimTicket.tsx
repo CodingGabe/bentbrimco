@@ -16,8 +16,8 @@ export type TicketDraft = {
   phone: string;
   price: number;
   deposit: number;
-  code?: string;
-  pickupCode?: string;
+  code?: string | undefined;
+  pickupCode?: string | undefined;
 };
 
 function Line({

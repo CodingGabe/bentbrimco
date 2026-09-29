@@ -16,7 +16,7 @@ export type DayAvailability = {
   date: string; // ISO start of day
   open: boolean;
   slots: Slot[];
-  reason?: string;
+  reason?: string | undefined;
 };
 
 const CLOSED_DAYS = [0, 1]; // Sun, Mon
