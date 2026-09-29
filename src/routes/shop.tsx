@@ -361,8 +361,8 @@ function HatCard({
   onAdvance,
 }: {
   b: Booking;
-  nextLabel?: string;
-  onAdvance?: () => void;
+  nextLabel?: string | undefined;
+  onAdvance?: (() => void) | undefined;
 }) {
   const svc = serviceById(b.serviceId);
   return (
