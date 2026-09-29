@@ -44,7 +44,7 @@ export function BrimPicker({
     <div className="grid gap-5 md:grid-cols-[1.1fr_1fr]">
       <div
         ref={padRef}
-        className="relative touch-none rounded-sm border border-border bg-secondary/70 p-4 shadow-[var(--shadow-lift)]"
+        className="relative touch-none rounded-sm border border-border bg-secondary/70 p-4 pb-12 shadow-[var(--shadow-lift)]"
         onPointerDown={(e) => {
           (e.target as Element).setPointerCapture?.(e.pointerId);
           setDragging(true);
@@ -83,7 +83,7 @@ export function BrimPicker({
             className="absolute inset-[9px] rounded-full border border-brass/70"
           />
         </button>
-        <div className="mt-2 flex justify-between font-mono text-[11px] uppercase tracking-widest text-muted-foreground">
+        <div className="absolute inset-x-4 bottom-3 flex justify-between font-mono text-[11px] uppercase tracking-widest text-muted-foreground">
           <span>open crown</span>
           <span>drag the brass</span>
           <span>tight pinch</span>

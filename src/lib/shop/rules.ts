@@ -91,6 +91,9 @@ export function buildAvailability(opts: {
 
     const slots: Slot[] = [];
     let missedDeadline = false;
+    const closedForToday =
+      nowMs > dayStart.getTime() + (rules.closeHour - 1) * HOUR &&
+      nowMs < dayStart.getTime() + 24 * HOUR;
 
     for (
       let h = rules.openHour;
@@ -133,7 +136,9 @@ export function buildAvailability(opts: {
 
     let reason: string | undefined;
     if (slots.length === 0) {
-      if (missedDeadline && needsDrying) {
+      if (closedForToday) {
+        reason = "Bench is closed for the day. Kettle's cooling.";
+      } else if (missedDeadline && needsDrying) {
         reason = `Felt needs a full day to set after steaming, so this one can't make your date.`;
       } else if (missedDeadline) {
         reason = "Finishes after your deadline.";

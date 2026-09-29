@@ -132,7 +132,9 @@ export function ClaimTicket({
           )}
         </Line>
         <Line label="Deposit">
-          {draft.deposit ? `$${draft.deposit} paid` : "$0"}
+          {draft.deposit
+            ? `$${draft.deposit} ${draft.code ? "paid" : "at booking"}`
+            : "$0"}
         </Line>
         {draft.pickupCode && (
           <Line label="Pickup code">
