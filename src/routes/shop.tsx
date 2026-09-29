@@ -59,7 +59,8 @@ function Bench() {
     return state.bookings.filter(
       (b) =>
         sameDay(b.start, state.now) ||
-        ["ready", "drying", "block"].includes(b.status),
+        ["ready", "drying", "block"].includes(b.status) ||
+        (b.status === "picked" && !!b.pickedAt && sameDay(b.pickedAt, state.now)),
     );
   }, [state]);
 
