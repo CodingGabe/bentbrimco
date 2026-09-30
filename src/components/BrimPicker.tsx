@@ -25,9 +25,9 @@ export function BrimPicker({
   const padRef = useRef<HTMLDivElement>(null);
   const [dragging, setDragging] = useState(false);
 
-  const set = (pinch: number, preset?: string) => {
+  const set = (pinch: number, preset?: string, curve = value.curve) => {
     const p = Math.max(0, Math.min(100, Math.round(pinch)));
-    onChange({ curve: value.curve, pinch: p, preset: preset ?? nearestPreset(value.curve, p) });
+    onChange({ curve, pinch: p, preset: preset ?? nearestPreset(curve, p) });
   };
 
   const fromEvent = (clientX: number) => {
@@ -96,7 +96,7 @@ export function BrimPicker({
               <button
                 key={p.name}
                 type="button"
-                 onClick={() => set(p.pinch, p.name)}
+                 onClick={() => set(p.pinch, p.name, p.curve)}
                 aria-pressed={active}
                 className={`flex min-h-11 items-center justify-between gap-3 rounded-sm border px-3 py-2 text-left transition-colors ${
                   active
