@@ -34,7 +34,7 @@ function About() {
         >
           ← Back to the ticket
         </Link>
-        <div className="mt-6 grid gap-10 md:grid-cols-[minmax(0,1fr)_minmax(0,1.5fr)] lg:gap-14">
+        <div className="mt-6 grid gap-10 md:grid-cols-2 lg:gap-14">
           <div className="min-w-0">
             <h1 className="text-5xl leading-[0.95]">
               A fictional shop,
@@ -74,10 +74,10 @@ function About() {
             </div>
           </div>
           <aside className="md:sticky md:top-8 md:self-start">
-            <div className="mx-auto w-fit overflow-hidden rounded-sm border border-border shadow-[var(--shadow-lift)]">
+            <div className="w-full overflow-hidden rounded-sm border border-border shadow-[var(--shadow-lift)]">
               <video
                 src="https://cdn.shopify.com/videos/c/o/v/77d6f18f7c0e45799410c46f5eb6f55e.mov"
-                className="mx-auto block aspect-[9/16] w-full object-cover md:h-[min(calc(100svh-10rem),600px)] md:w-auto"
+                className="block aspect-[9/16] max-h-[calc(100svh-6rem)] w-full object-cover"
                 autoPlay
                 muted
                 loop
