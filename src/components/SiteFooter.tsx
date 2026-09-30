@@ -2,11 +2,10 @@ import { Link } from "@tanstack/react-router";
 
 export function SiteFooter() {
   return (
-    <footer className="mt-20 border-t border-border bg-secondary/50">
-      <div aria-hidden className="hatband h-2 w-full opacity-80" />
-      <div className="mx-auto grid max-w-5xl gap-6 px-5 py-10 sm:grid-cols-3">
+    <footer className="mt-20 border-t border-border bg-secondary">
+      <div className="mx-auto grid max-w-7xl gap-8 px-5 py-12 sm:grid-cols-3">
         <div>
-          <p className="font-display text-xl">Bent Brim Co.</p>
+          <p className="font-display text-3xl uppercase">Bent Brim Co.</p>
           <p className="mt-1 font-mono text-xs text-muted-foreground">
             1512 S Congress Ave
             <br />
