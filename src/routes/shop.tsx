@@ -391,7 +391,7 @@ function HatCard({
          <Button variant="ghost"
           type="button"
           onClick={onAdvance}
-          className="mt-2 min-h-11 w-full rounded-sm border border-foreground px-2 font-mono text-[11px] uppercase tracking-widest hover:bg-secondary"
+          className="mt-2 h-auto min-h-11 w-full whitespace-normal rounded-sm border border-foreground px-3 py-2.5 text-center font-mono text-[11px] uppercase leading-snug tracking-widest hover:bg-secondary"
         >
           {nextLabel}
          </Button>
