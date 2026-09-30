@@ -23,7 +23,7 @@ export function SiteFooter() {
             to="/about"
             className="underline decoration-brass underline-offset-4 hover:text-oxblood"
           >
-            A fictional shop, a very real problem.
+            Deep in the heart of Texas
           </Link>
           <p className="mt-3">
             <Link
