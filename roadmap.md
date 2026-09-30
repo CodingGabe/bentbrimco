@@ -10,3 +10,4 @@
 - [x] Time Machine + reset demo
 - [x] About page, footer, head metadata, verified in browser (desktop + phone)
 - [x] Refresh the customer layout and typography with the supplied Tanker font and an editorial workshop photograph.
+- [x] Apply the supplied six-color palette in a 70/20/10 balance and replace the customer photograph with the supplied cowboy-and-horse image.

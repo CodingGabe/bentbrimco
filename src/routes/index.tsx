@@ -5,7 +5,7 @@ import { ClaimTicket, type TicketDraft } from "@/components/ClaimTicket";
 import { HatProfile } from "@/components/HatProfile";
 import { SiteFooter } from "@/components/SiteFooter";
 import { Steam } from "@/components/Steam";
-import workshopImage from "@/assets/hat-workshop.jpg";
+import heroPhoto from "@/assets/RKM-131.jpg.asset.json";
 import { downloadIcs } from "@/lib/shop/ics";
 import { buildAvailability } from "@/lib/shop/rules";
 import { makePickupCode, makeTicketCode, nextId } from "@/lib/shop/seed";
@@ -162,8 +162,8 @@ function Booker() {
       </header>
 
       {step === 0 && (
-        <section className="relative isolate flex min-h-[340px] items-end overflow-hidden bg-felt sm:min-h-[410px]" aria-label="Bent Brim hat shaping workshop">
-          <img src={workshopImage} alt="A hatmaker shaping a felt western hat by hand at the workbench" width={1536} height={864} className="absolute inset-0 -z-20 h-full w-full object-cover object-center" />
+        <section className="relative isolate flex min-h-[340px] items-end overflow-hidden bg-felt sm:min-h-[410px]" aria-label="Bent Brim western hat photograph">
+          <img src={heroPhoto.url} alt="A cowboy in a black western hat sitting beside a horse" width={2000} height={1333} className="absolute inset-0 -z-20 h-full w-full object-cover object-center" />
           <div className="absolute inset-0 -z-10 bg-[linear-gradient(0deg,var(--hero-shade),transparent_75%)]" />
           <div className="mx-auto w-full max-w-7xl px-5 pb-8 pt-20 text-primary-foreground sm:pb-12">
             <p className="text-xs font-semibold uppercase">Steam · Crease · Fit · Restore</p>
