@@ -27,7 +27,7 @@ export const Route = createFileRoute("/")({
       {
         name: "description",
         content:
-          "Steam, crease, fit, and restore western hats on South Congress in Austin. Build your claim ticket in five steps and you're booked.",
+          "Steam, crease, fit, and restore western hats on South Congress in Austin. Shape your hat, pick your time, and book.",
       },
       { property: "og:title", content: "Bent Brim Co. — hat shaping, booked" },
       {
@@ -45,6 +45,8 @@ export const Route = createFileRoute("/")({
 const STEP_LABELS = [
   "The hat",
   "The shape",
+  "The brim",
+  "Branding",
   "The day",
   "You",
   "Booked",
@@ -59,6 +61,7 @@ function Booker() {
     curve: PRESETS[0]!.curve,
     pinch: PRESETS[0]!.pinch,
   });
+  const [branding, setBranding] = useState<{ text: string; placement: "band" | "underbrim" } | null>(null);
   const [material, setMaterial] = useState<"felt" | "straw">("felt");
   const [size, setSize] = useState("Not sure, Sol will measure");
   const [photoName, setPhotoName] = useState<string | undefined>();
@@ -82,6 +85,7 @@ function Booker() {
   const draft: TicketDraft = {
     service,
     shape: step >= 1 ? shape : null,
+    branding,
     material: step >= 1 ? material : null,
     size: step >= 1 ? size : null,
     deadline: hasDeadline && deadline ? deadline : null,
@@ -122,6 +126,7 @@ function Booker() {
       phone: phone.trim(),
       serviceId: service.id,
       shape,
+      branding: branding?.text.trim() ? { ...branding, text: branding.text.trim() } : null,
       material,
       size,
       photoName,
@@ -140,7 +145,7 @@ function Booker() {
     };
     actions.addBooking(b);
     setBooked(b);
-    setStep(4);
+    setStep(6);
   }
 
   return (
@@ -213,7 +218,7 @@ function Booker() {
                 ))}
               </ul>
               <p className="mt-5 text-sm text-muted-foreground">
-                Need it by a date? Say so at step three — rush is +${RUSH_FEE},
+                Need it by a date? Tell us when you pick your time — rush is +${RUSH_FEE},
                 and only when the drying time actually allows it.
               </p>
             </section>
@@ -221,10 +226,9 @@ function Booker() {
 
           {step === 1 && (
             <section>
-              <StepHead n={2} title="How should it sit?" onBack={() => setStep(0)} />
+              <StepHead n={2} title="Shape the crown" onBack={() => setStep(0)} />
               <p className="mt-2 max-w-md text-muted-foreground">
-                Drag the brass handle until the profile looks like the hat in
-                your head. Or snap to a crease with a name.
+                Drag the green handle to shape the crown, or choose a familiar crease.
               </p>
               <div className="mt-6">
                 <BrimPicker value={shape} onChange={setShape} />
@@ -311,14 +315,56 @@ function Booker() {
               </div>
 
               <NextButton onClick={() => setStep(2)}>
-                That's the shape
+                Next: the brim
               </NextButton>
             </section>
           )}
 
-          {step === 2 && service && (
+          {step === 2 && (
             <section>
-              <StepHead n={3} title="When do you need it?" onBack={() => setStep(1)} />
+              <StepHead n={3} title="Shape the brim" onBack={() => setStep(1)} />
+              <p className="mt-2 max-w-md text-muted-foreground">Optional. Leave the brim as shown, or choose how much curl you want.</p>
+              <div className="mt-6 bg-secondary/60 p-5 sm:p-8">
+                <HatProfile curve={shape.curve} pinch={shape.pinch} className="mx-auto h-56 w-full max-w-md" />
+              </div>
+              <fieldset className="mt-6">
+                <legend className="text-xs font-semibold uppercase text-muted-foreground">Brim profile</legend>
+                <div className="mt-3 grid grid-cols-3 gap-2">
+                  {([{ label: "Flat", curve: 15 }, { label: "Gentle curl", curve: 45 }, { label: "High roll", curve: 85 }] as const).map((option) => (
+                    <button key={option.label} type="button" aria-pressed={Math.abs(shape.curve - option.curve) < 15} onClick={() => setShape({ ...shape, curve: option.curve, preset: "Your own thing" })} className={`min-h-12 rounded-sm border px-2 text-sm font-medium ${Math.abs(shape.curve - option.curve) < 15 ? "border-foreground bg-green text-foreground" : "border-border bg-paper"}`}>
+                      {option.label}
+                    </button>
+                  ))}
+                </div>
+                <label htmlFor="brim-curve" className="mt-6 flex justify-between text-xs font-semibold uppercase text-muted-foreground"><span>Brim curl</span><span>{shape.curve}%</span></label>
+                <input id="brim-curve" type="range" min="0" max="100" value={shape.curve} onChange={(e) => setShape({ ...shape, curve: Number(e.target.value), preset: "Your own thing" })} className="mt-2 h-11 w-full accent-[var(--color-green)]" />
+              </fieldset>
+              <NextButton onClick={() => setStep(3)}>Next: branding</NextButton>
+            </section>
+          )}
+
+          {step === 3 && (
+            <section>
+              <StepHead n={4} title="Make it yours" onBack={() => setStep(2)} />
+              <p className="mt-2 max-w-md text-muted-foreground">Branding is optional. Add short initials or a name for Sol to mark on the hat.</p>
+              <div className="mt-6 bg-secondary/60 p-5 sm:p-8">
+                <HatProfile curve={shape.curve} pinch={shape.pinch} branding={branding?.placement === "band" ? branding.text : undefined} className="mx-auto h-56 w-full max-w-md" />
+              </div>
+              <div className="mt-6 flex flex-wrap gap-2">
+                <button type="button" aria-pressed={!branding} onClick={() => setBranding(null)} className={`min-h-11 rounded-sm border px-4 ${!branding ? "border-foreground bg-green text-foreground" : "border-border bg-paper"}`}>No branding</button>
+                <button type="button" aria-pressed={!!branding} onClick={() => setBranding(branding ?? { text: "", placement: "band" })} className={`min-h-11 rounded-sm border px-4 ${branding ? "border-foreground bg-green text-foreground" : "border-border bg-paper"}`}>Add branding</button>
+              </div>
+              {branding && <div className="mt-6 max-w-md space-y-5">
+                <div><label htmlFor="brand-text" className="text-xs font-semibold uppercase text-muted-foreground">Initials or short name</label><input id="brand-text" maxLength={12} value={branding.text} onChange={(e) => setBranding({ ...branding, text: e.target.value })} placeholder="e.g. J.R." className="mt-2 min-h-12 w-full rounded-sm border border-border bg-paper px-3" /></div>
+                <fieldset><legend className="text-xs font-semibold uppercase text-muted-foreground">Placement</legend><div className="mt-2 flex gap-2">{([{ value: "band", label: "Hatband" }, { value: "underbrim", label: "Under brim" }] as const).map((p) => <button key={p.value} type="button" aria-pressed={branding.placement === p.value} onClick={() => setBranding({ ...branding, placement: p.value })} className={`min-h-11 flex-1 rounded-sm border px-3 ${branding.placement === p.value ? "border-foreground bg-green text-foreground" : "border-border bg-paper"}`}>{p.label}</button>)}</div></fieldset>
+              </div>}
+              <NextButton onClick={() => setStep(4)}>Next: pick a time</NextButton>
+            </section>
+          )}
+
+          {step === 4 && service && (
+            <section>
+              <StepHead n={5} title="When do you need it?" onBack={() => setStep(3)} />
               <div className="mt-5 rounded-sm border border-border bg-paper p-4">
                 <div className="flex flex-wrap items-center gap-3">
                   <button
@@ -432,7 +478,7 @@ function Booker() {
               )}
 
               {slot && (
-                <NextButton onClick={() => setStep(3)}>
+                <NextButton onClick={() => setStep(5)}>
                   Hold {fmtTime(slot.start)}{" "}
                   {slot.rush ? `(rush, +$${RUSH_FEE})` : ""}
                 </NextButton>
@@ -440,9 +486,9 @@ function Booker() {
             </section>
           )}
 
-          {step === 3 && (
+          {step === 5 && (
             <section>
-              <StepHead n={4} title="Your half of the ticket" onBack={() => setStep(2)} />
+              <StepHead n={6} title="Your half of the ticket" onBack={() => setStep(4)} />
               <form
                 className="mt-6 max-w-md space-y-5"
                 onSubmit={(e) => {
@@ -519,10 +565,10 @@ function Booker() {
             </section>
           )}
 
-          {step === 4 && booked && (
+          {step === 6 && booked && (
             <section>
               <p className="font-mono text-xs uppercase tracking-[0.25em] text-oxblood">
-                Step 5 · Done
+                 Step 7 · Done
               </p>
               <h1 className="mt-3 text-6xl leading-[0.9]">
                 You're booked.
@@ -605,7 +651,7 @@ function Booker() {
           <div className="sticky top-8">
             <Progress step={step} />
             <div className="mt-4">
-              <ClaimTicket draft={draft} stamped={step === 4} />
+              <ClaimTicket draft={draft} stamped={step === 6} />
             </div>
           </div>
         </aside>
@@ -615,7 +661,7 @@ function Booker() {
       <div className="fixed inset-x-0 bottom-0 z-20 md:hidden">
         {sheetOpen && (
           <div className="max-h-[70vh] overflow-y-auto border-t border-border bg-background px-4 pb-4 pt-3">
-            <ClaimTicket draft={draft} stamped={step === 4} />
+            <ClaimTicket draft={draft} stamped={step === 6} />
           </div>
         )}
         <button
@@ -629,7 +675,7 @@ function Booker() {
               Your claim ticket
             </span>
             <span className="block font-mono text-[10px] uppercase tracking-[0.2em] text-muted-foreground">
-              {STEP_LABELS[step]} · step {Math.min(step + 1, 5)} of 5
+               {STEP_LABELS[step]} · step {Math.min(step + 1, 7)} of 7
             </span>
           </span>
           <HatProfile curve={shape.curve} pinch={shape.pinch} className="h-8 w-12" />
