@@ -112,7 +112,7 @@ export function BrimPicker({
                     {p.name}
                   </span>
                   <span
-                     className="mt-1 block text-sm leading-snug text-muted-foreground"
+                     className={`mt-1 block text-sm leading-snug ${active ? "text-foreground" : "text-muted-foreground"}`}
                   >
                     {p.blurb}
                   </span>
