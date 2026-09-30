@@ -1,7 +1,6 @@
 import { createFileRoute, Link } from "@tanstack/react-router";
 import { useEffect, useMemo, useRef, useState } from "react";
 import { AnimatePresence, motion, useReducedMotion } from "motion/react";
-import ropeArt from "@/assets/rope.svg.asset.json";
 import { Button } from "@/components/ui/button";
 import { BrimPicker } from "@/components/BrimPicker";
 import { ClaimTicket, type TicketDraft } from "@/components/ClaimTicket";
