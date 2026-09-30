@@ -35,6 +35,8 @@ export const Route = createFileRoute("/")({
         content:
           "Hat's lost its nerve? Build your claim ticket and Sol takes it from there. No login, no DM tag.",
       },
+      { property: "og:type", content: "website" },
+      { name: "twitter:card", content: "summary_large_image" },
     ],
   }),
   component: Booker,

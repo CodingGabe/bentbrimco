@@ -18,3 +18,4 @@
   slots, so drying time, hours, buffers, and caps stay enforced in one place.
 - Time only advances through the Time Machine actions, never `Date.now()` in
   components, so the demo clock stays reproducible.
+- The customer page uses the hosted Tanker display font and a workshop photograph, while body copy stays in Instrument Sans, to preserve a retail-inspired hierarchy without changing booking logic.
