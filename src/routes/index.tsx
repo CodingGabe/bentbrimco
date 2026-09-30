@@ -628,6 +628,14 @@ function Booker() {
                 >
                   Add to calendar
                 </Button>
+                <Button
+                  variant="ghost"
+                  type="button"
+                  onClick={() => window.print()}
+                  className="min-h-12 rounded-sm border border-foreground px-5 font-mono text-sm uppercase tracking-widest hover:bg-secondary"
+                >
+                  Print ticket (PDF)
+                </Button>
                 <Link
                   to="/t/$code"
                   params={{ code: booked.code }}
@@ -665,7 +673,7 @@ function Booker() {
         {/* Ticket: side rail on desktop */}
         <aside className="hidden border-l border-border pl-8 md:block">
           <div className="sticky top-8">
-            <div>
+            <div className="print-ticket">
               <ClaimTicket draft={draft} stamped={step === 6} />
             </div>
           </div>

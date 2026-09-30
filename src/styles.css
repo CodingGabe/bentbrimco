@@ -221,3 +221,13 @@
     transition-duration: 0.001ms !important;
   }
 }
+
+@media print {
+  @page { margin: 12mm; }
+  body * { visibility: hidden !important; }
+  .print-ticket, .print-ticket * { visibility: visible !important; }
+  .print-ticket { position: absolute; left: 0; top: 0; width: 90mm; display: block !important; }
+  .print-ticket * { animation: none !important; }
+  aside:has(.print-ticket) { display: block !important; }
+  * { -webkit-print-color-adjust: exact; print-color-adjust: exact; }
+}
