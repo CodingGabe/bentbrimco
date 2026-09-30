@@ -206,7 +206,7 @@ function Booker() {
                         setStep(1);
                       }}
                       style={{ animationDelay: `${i * 60}ms` }}
-                      className="group flex w-full items-center justify-between gap-4 px-2 py-5 text-left transition-colors hover:bg-secondary sm:px-4"
+                       className="group flex h-auto min-h-20 w-full items-center justify-between gap-4 whitespace-normal px-2 py-5 text-left transition-colors hover:bg-secondary sm:px-4"
                     >
                       <span className="min-w-0">
                         <span className="block font-display text-2xl uppercase leading-tight">
