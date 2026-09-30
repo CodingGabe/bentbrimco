@@ -2,7 +2,7 @@ type Props = {
   curve: number; // 0..100
   pinch: number; // 0..100
   className?: string;
-  branding?: string;
+  branding?: string | undefined;
 };
 
 /** Side profile with separate crown pinch and brim curl, sharing the same preview throughout booking. */
