@@ -160,6 +160,7 @@ function TicketPage() {
           draft={{
             service: svc,
             shape: booking.shape,
+            branding: booking.branding,
             material: booking.material,
             size: booking.size,
             deadline: booking.deadline,

@@ -1,11 +1,12 @@
 import type { ReactNode } from "react";
 import { HatProfile } from "./HatProfile";
 import { fmtLongDay, fmtTime } from "@/lib/shop/time";
-import { type BrimShape, type Service } from "@/lib/shop/types";
+import { type Branding, type BrimShape, type Service } from "@/lib/shop/types";
 
 export type TicketDraft = {
   service: Service | null;
   shape: BrimShape | null;
+  branding?: Branding | null | undefined;
   material: "felt" | "straw" | null;
   size: string | null;
   deadline: string | null;
@@ -88,6 +89,8 @@ export function ClaimTicket({
             blank
           )}
         </Line>
+        {draft.shape && <Line label="Brim">{draft.shape.curve < 25 ? "Flat" : draft.shape.curve < 65 ? "Gentle curl" : "High roll"}</Line>}
+        {draft.branding?.text && <Line label="Branding">{draft.branding.text} · {draft.branding.placement === "band" ? "hatband" : "under brim"}</Line>}
         <Line label="Material">
           {draft.material ? (
             <>
