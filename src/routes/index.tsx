@@ -1,6 +1,6 @@
 import { createFileRoute, Link } from "@tanstack/react-router";
-import { useMemo, useState } from "react";
-import { AnimatePresence, motion } from "motion/react";
+import { useEffect, useMemo, useRef, useState } from "react";
+import { AnimatePresence, motion, useReducedMotion } from "motion/react";
 import ropeArt from "@/assets/rope.svg.asset.json";
 import { Button } from "@/components/ui/button";
 import { BrimPicker } from "@/components/BrimPicker";
@@ -705,13 +705,18 @@ function Booker() {
 }
 
 function Journey({ step, onSelect }: { step: number; onSelect: (step: number) => void }) {
+  const navRef = useRef<HTMLElement>(null);
+  const reducedMotion = useReducedMotion();
+  useEffect(() => {
+    navRef.current?.scrollTo({ left: Math.max(0, (step - 1) * 90), behavior: reducedMotion ? "instant" : "smooth" });
+  }, [step, reducedMotion]);
   return (
-    <nav aria-label="Booking progress" className="overflow-x-auto pb-2">
+    <nav ref={navRef} aria-label="Booking progress" className="overflow-x-auto pb-2">
       <div className="relative flex min-w-[630px] items-start justify-between px-2 pt-3">
         <div aria-hidden className="booking-rope absolute left-[7%] right-[7%] top-[23px] h-[3px] opacity-45" />
-        <motion.div aria-hidden className="booking-rope absolute left-[7%] top-[23px] h-[3px] w-[86%] origin-left" initial={false} animate={{ scaleX: step / 6 }} transition={{ duration: 0.55, ease: [0.22, 1, 0.36, 1] }} />
+        <motion.div aria-hidden className="booking-rope absolute left-[7%] top-[23px] h-[3px] w-[86%] origin-left" initial={false} animate={{ scaleX: step / 6 }} transition={{ duration: reducedMotion ? 0 : 0.55, ease: [0.22, 1, 0.36, 1] }} />
         {STEP_LABELS.map((label, i) => (
-          <Button variant="ghost" key={label} type="button" disabled={i > step || i === step} onClick={() => onSelect(i)} aria-current={i === step ? "step" : undefined} className={`relative z-10 flex h-auto w-[88px] flex-col gap-1 whitespace-normal rounded-none p-0 text-center font-mono text-[10px] uppercase leading-tight ${i === step ? "text-green-ink" : "text-foreground"}`}>
+          <Button variant="ghost" key={label} type="button" disabled={i > step || i === step} onClick={() => onSelect(i)} aria-current={i === step ? "step" : undefined} className={`relative z-10 flex h-auto w-[88px] flex-col gap-1 whitespace-normal rounded-none p-0 text-center font-mono text-[10px] uppercase leading-tight hover:bg-transparent hover:text-green-ink ${i === step ? "text-green-ink" : "text-foreground"}`}>
             <span className={`flex h-7 w-7 items-center justify-center rounded-full border-2 font-semibold ${i <= step ? "border-green-ink bg-green text-foreground" : "border-border bg-background text-foreground"}`}>
               {i === step ? <img src={ropeArt.url} alt="" className="h-5 w-3 object-contain" /> : i < step ? "✓" : i + 1}
             </span>
