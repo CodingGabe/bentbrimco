@@ -4,7 +4,7 @@
 
 @custom-variant dark (&:is(.dark *));
 
-/* Bent Brim Co. editorial workshop design system. */
+/* Bent Brim Co. palette: 70% pale canvas, 20% dark/earth structure, 10% copper accents. */
 
 @font-face {
   font-family: "Tanker";
@@ -47,37 +47,37 @@
   --font-display: "Tanker", Impact, sans-serif;
   --font-mono: "Instrument Sans", Arial, sans-serif;
   --font-sans: "Instrument Sans", Arial, sans-serif;
-  --shadow-bench: 0 18px 40px -24px oklch(0.21 0.02 60 / 0.55);
-  --shadow-lift: 0 10px 24px -14px oklch(0.21 0.02 60 / 0.6);
+  --shadow-bench: 0 18px 40px -24px oklch(0.1919 0.0511 45.47 / 0.4);
+  --shadow-lift: 0 10px 24px -14px oklch(0.1919 0.0511 45.47 / 0.35);
 }
 
 :root {
   --radius: 0.4rem;
-  --background: oklch(0.99 0.004 85);
-  --foreground: oklch(0.223 0.011 60);
-  --card: oklch(1 0 0);
-  --card-foreground: oklch(0.223 0.011 60);
-  --popover: oklch(1 0 0);
-  --popover-foreground: oklch(0.223 0.011 60);
-  --primary: oklch(0.36 0.115 27.5);
-  --primary-foreground: oklch(0.962 0.014 86);
-  --secondary: oklch(0.962 0.012 75);
-  --secondary-foreground: oklch(0.223 0.011 60);
-  --muted: oklch(0.95 0.012 75);
-  --muted-foreground: oklch(0.45 0.014 63);
-  --accent: oklch(0.66 0.098 84);
-  --accent-foreground: oklch(0.223 0.011 60);
-  --destructive: oklch(0.47 0.16 27);
-  --destructive-foreground: oklch(0.962 0.014 86);
-  --border: oklch(0.86 0.01 75);
-  --input: oklch(0.86 0.01 75);
-  --ring: oklch(0.36 0.115 27.5);
-  --oxblood: oklch(0.36 0.115 27.5);
-  --brass: oklch(0.66 0.098 84);
-  --sage: oklch(0.6 0.042 130);
-  --paper: oklch(1 0 0);
-  --felt: oklch(0.26 0.012 60);
-  --hero-shade: oklch(0.16 0.014 55 / 0.86);
+  --background: oklch(0.8747 0.0163 82.79); /* #DBD5CA · 70% canvas */
+  --foreground: oklch(0.1919 0.0511 45.47); /* #260B01 */
+  --card: oklch(0.8747 0.0163 82.79);
+  --card-foreground: oklch(0.1919 0.0511 45.47);
+  --popover: oklch(0.8747 0.0163 82.79);
+  --popover-foreground: oklch(0.1919 0.0511 45.47);
+  --primary: oklch(0.1919 0.0511 45.47);
+  --primary-foreground: oklch(0.8747 0.0163 82.79);
+  --secondary: oklch(0.7913 0.0439 77.55); /* #CBB89C */
+  --secondary-foreground: oklch(0.1919 0.0511 45.47);
+  --muted: oklch(0.7913 0.0439 77.55);
+  --muted-foreground: oklch(0.4599 0.0433 82.6); /* #64563C */
+  --accent: oklch(0.5171 0.0886 60.17); /* #8D5B2F · 10% accent */
+  --accent-foreground: oklch(0.1919 0.0511 45.47);
+  --destructive: oklch(0.5171 0.0886 60.17);
+  --destructive-foreground: oklch(0.1919 0.0511 45.47);
+  --border: oklch(0.669 0.0207 119.94); /* #939789 */
+  --input: oklch(0.669 0.0207 119.94);
+  --ring: oklch(0.5171 0.0886 60.17);
+  --oxblood: oklch(0.1919 0.0511 45.47);
+  --brass: oklch(0.5171 0.0886 60.17);
+  --sage: oklch(0.4599 0.0433 82.6);
+  --paper: oklch(0.8747 0.0163 82.79);
+  --felt: oklch(0.1919 0.0511 45.47);
+  --hero-shade: oklch(0.1919 0.0511 45.47 / 0.85);
 }
 
 @layer base {
@@ -113,12 +113,12 @@
   background-image:
     repeating-linear-gradient(
       0deg,
-      oklch(0.21 0.02 60 / 0.02) 0px,
-      oklch(0.21 0.02 60 / 0.02) 1px,
+      oklch(0.1919 0.0511 45.47 / 0.02) 0px,
+      oklch(0.1919 0.0511 45.47 / 0.02) 1px,
       transparent 1px,
       transparent 3px
     ),
-    radial-gradient(oklch(0.21 0.02 60 / 0.05) 1px, transparent 1px);
+    radial-gradient(oklch(0.1919 0.0511 45.47 / 0.05) 1px, transparent 1px);
   background-size: auto, 5px 5px;
 }
 

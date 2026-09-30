@@ -18,4 +18,5 @@
   slots, so drying time, hours, buffers, and caps stay enforced in one place.
 - Time only advances through the Time Machine actions, never `Date.now()` in
   components, so the demo clock stays reproducible.
-- The customer page uses the hosted Tanker display font and a workshop photograph, while body copy stays in Instrument Sans, to preserve a retail-inspired hierarchy without changing booking logic.
+- The customer page uses hosted Tanker display type, Instrument Sans body type, and the supplied cowboy photograph via an asset pointer, preserving the retail-inspired hierarchy without changing booking logic.
+- The six supplied colors are mapped to semantic tokens in `src/styles.css` with a 70% pale canvas, 20% dark/earth structure, and 10% copper accents so all views remain consistent.
