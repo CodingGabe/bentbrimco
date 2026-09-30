@@ -57,6 +57,7 @@ const STEP_LABELS = [
 
 function Booker() {
   const { state, actions } = useShop();
+  const reducedMotion = useReducedMotion();
   const [step, setStep] = useState(0);
   const [service, setService] = useState<Service | null>(null);
   const [shape, setShape] = useState<BrimShape>({
@@ -186,7 +187,7 @@ function Booker() {
         <div className="mt-8 grid gap-10 md:grid-cols-[minmax(0,1fr)_320px] md:gap-16">
         <div>
           <AnimatePresence mode="wait" initial={false}>
-          <motion.div key={step} initial={{ opacity: 0, y: 20, scale: 0.985 }} animate={{ opacity: 1, y: 0, scale: 1 }} exit={{ opacity: 0, y: -16, scale: 0.985 }} transition={{ duration: 0.28, ease: [0.22, 1, 0.36, 1] }}>
+          <motion.div key={step} initial={reducedMotion ? false : { opacity: 0, y: 20, scale: 0.985 }} animate={{ opacity: 1, y: 0, scale: 1 }} exit={reducedMotion ? { opacity: 1 } : { opacity: 0, y: -16, scale: 0.985 }} transition={{ duration: reducedMotion ? 0 : 0.28, ease: [0.22, 1, 0.36, 1] }}>
           {step === 0 && (
             <section>
               <p className="text-xs font-semibold uppercase text-green-ink">01 / Choose your service</p>
