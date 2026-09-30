@@ -374,6 +374,7 @@ function HatCard({
       <p className="font-mono text-[11px] text-muted-foreground">
         {svc.name} · {b.shape.preset}
       </p>
+      {b.branding?.text && <p className="font-mono text-[11px] text-muted-foreground">Brand: {b.branding.text} · {b.branding.placement === "band" ? "hatband" : "under brim"}</p>}
       <p className="font-mono text-[11px] text-muted-foreground">
         {fmtDay(b.start)} {fmtTime(b.start)} · {b.code}
       </p>

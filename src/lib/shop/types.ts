@@ -61,6 +61,11 @@ export type BrimShape = {
   pinch: number; // 0 open .. 100 tight pinch
 };
 
+export type Branding = {
+  text: string;
+  placement: "band" | "underbrim";
+};
+
 export const PRESETS: { name: string; curve: number; pinch: number; blurb: string }[] = [
   { name: "Cattleman", curve: 42, pinch: 58, blurb: "Three creases, working brim." },
   { name: "Gus", curve: 30, pinch: 74, blurb: "Sloped front, tall back." },
@@ -87,6 +92,7 @@ export type Booking = {
   phone: string;
   serviceId: ServiceId;
   shape: BrimShape;
+  branding?: Branding | null | undefined;
   material: "felt" | "straw";
   size: string;
   photoName?: string | undefined;

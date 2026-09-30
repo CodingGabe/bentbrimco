@@ -4,10 +4,11 @@
 - [x] Data layer: types, seed data, localStorage store, simulated clock
 - [x] Availability rules engine (drying time, hours, rush cap, buffers, reasons)
 - [x] Claim ticket component (paper grain, perforation, stamp)
-- [x] Customer flow `/` — 5 steps incl. SVG brim picker, deposit, confirmation + .ics
+- [x] Customer flow `/` — 7 steps incl. crown, optional brim and branding, deposit, confirmation + .ics
 - [x] Manage booking `/t/$code` — reschedule / cancel, no login
 - [x] Owner Bench `/shop` — board, requests, no-show radar, waitlist, message log, rules, hours saved
 - [x] Time Machine + reset demo
 - [x] About page, footer, head metadata, verified in browser (desktop + phone)
 - [x] Refresh the customer layout and typography with the supplied Tanker font and an editorial workshop photograph.
 - [x] Apply the supplied six-color palette in a 70/20/10 balance and replace the customer photograph with the supplied cowboy-and-horse image.
+- [x] Add #A9C5A0 as a readable third accent, improve the hat preview and green band, and add optional brim and branding steps to booking.

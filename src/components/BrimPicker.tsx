@@ -25,67 +25,62 @@ export function BrimPicker({
   const padRef = useRef<HTMLDivElement>(null);
   const [dragging, setDragging] = useState(false);
 
-  const set = (curve: number, pinch: number, preset?: string) => {
-    const c = Math.max(0, Math.min(100, Math.round(curve)));
+  const set = (pinch: number, preset?: string, curve = value.curve) => {
     const p = Math.max(0, Math.min(100, Math.round(pinch)));
-    onChange({ curve: c, pinch: p, preset: preset ?? nearestPreset(c, p) });
+    onChange({ curve, pinch: p, preset: preset ?? nearestPreset(curve, p) });
   };
 
-  const fromEvent = (clientX: number, clientY: number) => {
+  const fromEvent = (clientX: number) => {
     const el = padRef.current;
     if (!el) return;
     const r = el.getBoundingClientRect();
     const pinch = ((clientX - r.left) / r.width) * 100;
-    const curve = ((r.bottom - clientY) / r.height) * 100;
-    set(curve, pinch);
+    set(pinch);
   };
 
   return (
     <div className="grid gap-5 md:grid-cols-[1.1fr_1fr]">
       <div
         ref={padRef}
-        className="relative touch-none rounded-sm border border-border bg-secondary/70 p-4 pb-12 shadow-[var(--shadow-lift)]"
+        className="relative h-72 touch-none rounded-sm border border-border bg-secondary/70 p-4 pb-12 shadow-[var(--shadow-lift)]"
         onPointerDown={(e) => {
           (e.target as Element).setPointerCapture?.(e.pointerId);
           setDragging(true);
-          fromEvent(e.clientX, e.clientY);
+          fromEvent(e.clientX);
         }}
-        onPointerMove={(e) => dragging && fromEvent(e.clientX, e.clientY)}
+        onPointerMove={(e) => dragging && fromEvent(e.clientX)}
         onPointerUp={() => setDragging(false)}
         onPointerCancel={() => setDragging(false)}
       >
         <HatProfile
           curve={value.curve}
           pinch={value.pinch}
-          className="mx-auto h-44 w-full max-w-sm"
+          className="mx-auto h-52 w-full max-w-sm"
         />
         <button
           type="button"
-          aria-label={`Shape handle. Left and right sets crown pinch (${value.pinch}), up and down sets brim curve (${value.curve}).`}
+          aria-label={`Crown pinch ${value.pinch} of 100. Use left and right arrow keys to adjust.`}
           onKeyDown={(e) => {
             const step = e.shiftKey ? 10 : 4;
-            if (e.key === "ArrowUp") set(value.curve + step, value.pinch);
-            else if (e.key === "ArrowDown") set(value.curve - step, value.pinch);
-            else if (e.key === "ArrowLeft") set(value.curve, value.pinch - step);
-            else if (e.key === "ArrowRight") set(value.curve, value.pinch + step);
+            if (e.key === "ArrowLeft") set(value.pinch - step);
+            else if (e.key === "ArrowRight") set(value.pinch + step);
             else return;
             e.preventDefault();
           }}
-          className="absolute h-11 w-11 -translate-x-1/2 translate-y-1/2 rounded-full border-2 border-paper bg-oxblood shadow-[var(--shadow-lift)] transition-transform hover:scale-105"
+          className="absolute bottom-10 h-11 w-11 -translate-x-1/2 rounded-full border-2 border-foreground bg-green shadow-[var(--shadow-lift)] transition-transform hover:scale-105"
           style={{
-            left: `calc(${value.pinch}% )`,
-            bottom: `calc(${value.curve}% )`,
+            left: `clamp(24px, ${value.pinch}%, calc(100% - 24px))`,
           }}
         >
           <span className="sr-only">Drag to shape</span>
           <span
             aria-hidden
-            className="absolute inset-[9px] rounded-full border border-brass/70"
+            className="absolute inset-[9px] rounded-full border border-foreground/70"
           />
         </button>
         <div className="absolute inset-x-4 bottom-3 flex justify-between font-mono text-[11px] uppercase tracking-widest text-muted-foreground">
           <span>open crown</span>
-          <span>drag the brass</span>
+          <span>drag the green</span>
           <span>tight pinch</span>
         </div>
       </div>
@@ -101,11 +96,11 @@ export function BrimPicker({
               <button
                 key={p.name}
                 type="button"
-                onClick={() => set(p.curve, p.pinch, p.name)}
+                 onClick={() => set(p.pinch, p.name, p.curve)}
                 aria-pressed={active}
                 className={`flex min-h-11 items-center justify-between gap-3 rounded-sm border px-3 py-2 text-left transition-colors ${
                   active
-                    ? "border-oxblood bg-oxblood text-primary-foreground"
+                     ? "border-foreground bg-green text-foreground"
                     : "border-border bg-paper hover:border-oxblood/60"
                 }`}
               >

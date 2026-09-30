@@ -2,24 +2,18 @@ type Props = {
   curve: number; // 0..100
   pinch: number; // 0..100
   className?: string;
+  branding?: string | undefined;
 };
 
-/** Side profile of a western hat, drawn from curve + pinch values. */
-export function HatProfile({ curve, pinch, className }: Props) {
-  const lift = 6 + (curve / 100) * 46; // how far brim tips curl up
-  const roll = (curve / 100) * 18;
-  const pinchDepth = 6 + (pinch / 100) * 26;
-  const crownTop = 54 - (pinch / 100) * 8;
+/** Side profile with separate crown pinch and brim curl, sharing the same preview throughout booking. */
+export function HatProfile({ curve, pinch, className, branding }: Props) {
+  const tip = 133 - (curve / 100) * 43;
+  const dip = 136 + (curve / 100) * 7;
+  const crownTop = 56 - (pinch / 100) * 11;
+  const crease = crownTop + 8 + (pinch / 100) * 20;
 
-  const brim = `M 18 ${132 - lift * 0.35}
-    C 40 ${150 + roll * 0.2}, 160 ${150 + roll * 0.2}, 182 ${132 - lift * 0.35}
-    C 168 ${140 - lift}, 32 ${140 - lift}, 18 ${132 - lift * 0.35} Z`;
-
-  const crown = `M 52 134
-    C 48 ${112 - pinchDepth * 0.2}, 50 ${crownTop + 14}, 62 ${crownTop + 4}
-    C 74 ${crownTop - 4}, 82 ${crownTop + pinchDepth * 0.35}, 100 ${crownTop + pinchDepth * 0.2}
-    C 118 ${crownTop}, 128 ${crownTop - 2}, 138 ${crownTop + 10}
-    C 150 ${crownTop + 22}, 152 118, 148 134 Z`;
+  const brim = `M 10 ${tip} Q 31 ${dip} 52 132 Q 100 ${dip + 3} 148 132 Q 169 ${dip} 190 ${tip} L 190 ${tip + 8} Q 168 ${dip + 10} 148 141 Q 100 ${dip + 12} 52 141 Q 32 ${dip + 10} 10 ${tip + 8} Z`;
+  const crown = `M 51 133 C 49 107 48 73 60 ${crownTop + 8} Q 68 ${crownTop - 3} 80 ${crownTop + 4} Q 91 ${crease} 100 ${crease} Q 109 ${crease} 120 ${crownTop + 4} Q 132 ${crownTop - 3} 140 ${crownTop + 8} C 152 73 151 107 149 133 Z`;
 
   return (
     <svg
@@ -28,20 +22,17 @@ export function HatProfile({ curve, pinch, className }: Props) {
       role="img"
       aria-label={`Hat side profile, brim curve ${curve} of 100, crown pinch ${pinch} of 100`}
     >
-      <path d={brim} fill="var(--color-felt)" />
-      <path d={crown} fill="var(--color-felt)" />
+      <path d={brim} fill="var(--color-felt)" stroke="var(--color-brass)" strokeWidth="1.6" />
+      <path d={crown} fill="var(--color-felt)" stroke="var(--color-brass)" strokeWidth="1.8" />
+      <path d={`M 60 ${crownTop + 10} Q 72 ${crownTop + 1} 82 ${crownTop + 10} Q 100 ${crease + 7} 118 ${crownTop + 10} Q 130 ${crownTop + 1} 140 ${crownTop + 10}`} fill="none" stroke="var(--color-green)" strokeWidth="2.5" opacity="0.85" />
       <path
-        d={`M 54 ${128} C 80 ${138}, 120 ${138}, 146 ${128} L 146 118 C 120 128, 80 128, 54 118 Z`}
-        fill="var(--color-oxblood)"
-        opacity="0.95"
+        d="M 51 117 Q 100 125 149 117 L 149 130 Q 100 138 51 130 Z"
+        fill="var(--color-green)"
+        stroke="var(--color-felt)"
+        strokeWidth="1.5"
       />
-      <path
-        d={`M 100 ${crownTop + 4} C 92 ${crownTop + pinchDepth}, 108 ${crownTop + pinchDepth}, 100 ${crownTop + 4}`}
-        stroke="var(--color-brass)"
-        strokeWidth="2"
-        fill="none"
-        opacity="0.7"
-      />
+      <path d={`M 14 ${tip + 4} Q 32 ${dip + 6} 52 136 M 148 136 Q 168 ${dip + 6} 186 ${tip + 4}`} fill="none" stroke="var(--color-green)" strokeWidth="2" opacity="0.85" />
+      {branding && <text x="100" y="129" textAnchor="middle" fontSize="8" fontWeight="700" fill="var(--color-felt)">{branding.slice(0, 12)}</text>}
     </svg>
   );
 }
