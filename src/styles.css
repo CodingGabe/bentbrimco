@@ -44,6 +44,7 @@
   --color-oxblood: var(--oxblood);
   --color-paper: var(--paper);
   --color-felt: var(--felt);
+  --color-green: var(--green);
   --font-display: "Tanker", Impact, sans-serif;
   --font-mono: "Instrument Sans", Arial, sans-serif;
   --font-sans: "Instrument Sans", Arial, sans-serif;
@@ -77,6 +78,7 @@
   --sage: oklch(0.4599 0.0433 82.6);
   --paper: oklch(0.8747 0.0163 82.79);
   --felt: oklch(0.1919 0.0511 45.47);
+  --green: #a9c5a0;
   --hero-shade: oklch(0.1919 0.0511 45.47 / 0.85);
 }
 
@@ -127,8 +129,8 @@
     90deg,
     var(--color-felt) 0px,
     var(--color-felt) 14px,
-    var(--color-brass) 14px,
-    var(--color-brass) 18px
+    var(--color-green) 14px,
+    var(--color-green) 18px
   );
 }
 

@@ -20,3 +20,4 @@
   components, so the demo clock stays reproducible.
 - The customer page uses hosted Tanker display type, Instrument Sans body type, and the supplied cowboy photograph via an asset pointer, preserving the retail-inspired hierarchy without changing booking logic.
 - The six supplied colors are mapped to semantic tokens in `src/styles.css` with a 70% pale canvas, 20% dark/earth structure, and 10% copper accents so all views remain consistent.
+- Keep optional brim and branding choices on booking records and claim tickets, while preserving existing bookings without those fields, so older local demo data still renders.
