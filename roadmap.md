@@ -12,3 +12,4 @@
 - [x] Refresh the customer layout and typography with the supplied Tanker font and an editorial workshop photograph.
 - [x] Apply the supplied six-color palette in a 70/20/10 balance and replace the customer photograph with the supplied cowboy-and-horse image.
 - [x] Add #A9C5A0 as a readable third accent, improve the hat preview and green band, and add optional brim and branding steps to booking.
+- [x] Switch to #758173, add a contrasting green ink for labels, adapt the supplied hat silhouette to crown and brim controls, add side branding, and animate the rope booking journey.

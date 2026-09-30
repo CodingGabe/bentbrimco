@@ -21,4 +21,6 @@
 - The customer page uses hosted Tanker display type, Instrument Sans body type, and the supplied cowboy photograph via an asset pointer, preserving the retail-inspired hierarchy without changing booking logic.
 - The six supplied colors are mapped to semantic tokens in `src/styles.css` with a 70% pale canvas, 20% dark/earth structure, and 10% copper accents so all views remain consistent.
 - Keep optional brim and branding choices on booking records and claim tickets, while preserving existing bookings without those fields, so older local demo data still renders.
-- Treat #A9C5A0 as a light accent for selections and hatband details with dark foreground text, keeping customer controls legible.
+- Use #758173 for hatband and selected surfaces, with dark green ink for small labels on pale surfaces and pale green ink on dark surfaces, because the requested green alone is not readable as small text on the canvas.
+- Keep the front-facing hat silhouette parameterized by crown pinch and brim curl, and show branding placement on the same preview across booking and tickets so selections remain visually consistent.
+- Animate customer booking steps and rope progress in presentation only, preserving the booking rules and honoring reduced-motion preferences.

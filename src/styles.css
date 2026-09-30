@@ -45,6 +45,8 @@
   --color-paper: var(--paper);
   --color-felt: var(--felt);
   --color-green: var(--green);
+  --color-green-ink: var(--green-ink);
+  --color-green-on-dark: var(--green-on-dark);
   --font-display: "Tanker", Impact, sans-serif;
   --font-mono: "Instrument Sans", Arial, sans-serif;
   --font-sans: "Instrument Sans", Arial, sans-serif;
@@ -78,7 +80,9 @@
   --sage: oklch(0.4599 0.0433 82.6);
   --paper: oklch(0.8747 0.0163 82.79);
   --felt: oklch(0.1919 0.0511 45.47);
-  --green: #a9c5a0;
+  --green: #758173;
+  --green-ink: #3d493a;
+  --green-on-dark: #b8ccb4;
   --hero-shade: oklch(0.1919 0.0511 45.47 / 0.85);
 }
 
@@ -202,6 +206,10 @@
 }
 .steam-puff {
   animation: steam-rise 3.6s ease-in-out infinite;
+}
+
+.booking-rope {
+  background: repeating-linear-gradient(115deg, var(--color-brass) 0 3px, var(--color-felt) 3px 5px, var(--color-brass) 5px 8px);
 }
 
 @media (prefers-reduced-motion: reduce) {

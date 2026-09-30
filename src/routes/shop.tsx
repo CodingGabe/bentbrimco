@@ -153,12 +153,12 @@ function Bench() {
                     key={col.key}
                     className="rounded-sm border border-border bg-secondary/40 p-3"
                   >
-                    <h2 className="font-mono text-[11px] uppercase tracking-[0.18em] text-muted-foreground">
+                     <h2 className="font-mono text-[11px] uppercase tracking-[0.18em] text-green-ink">
                       {col.label} ({items.length})
                     </h2>
                     <div className="mt-3 space-y-2">
                       {items.length === 0 && (
-                        <p className="font-mono text-xs text-muted-foreground/70">
+                        <p className="font-mono text-xs text-muted-foreground">
                           Empty hook.
                         </p>
                       )}
@@ -280,7 +280,7 @@ function Bench() {
                   className="rounded-sm border border-border bg-paper p-3"
                 >
                   <div className="flex flex-wrap items-baseline justify-between gap-2">
-                    <span className="font-mono text-[11px] uppercase tracking-[0.18em] text-oxblood">
+                     <span className="font-mono text-[11px] uppercase tracking-[0.18em] text-green-ink">
                       {MESSAGE_LABEL[m.kind] ?? m.kind}
                     </span>
                     <span className="font-mono text-[11px] text-muted-foreground">
@@ -374,7 +374,7 @@ function HatCard({
       <p className="font-mono text-[11px] text-muted-foreground">
         {svc.name} · {b.shape.preset}
       </p>
-      {b.branding?.text && <p className="font-mono text-[11px] text-muted-foreground">Brand: {b.branding.text} · {b.branding.placement === "band" ? "hatband" : "under brim"}</p>}
+       {b.branding?.text && <p className="font-mono text-[11px] text-muted-foreground">Brand: {b.branding.text} · {b.branding.placement === "band" ? "hatband" : b.branding.placement === "side" ? "side of hat" : "under brim"}</p>}
       <p className="font-mono text-[11px] text-muted-foreground">
         {fmtDay(b.start)} {fmtTime(b.start)} · {b.code}
       </p>
@@ -476,7 +476,7 @@ function TimeMachine({
 }) {
   return (
     <div className="rounded-sm border border-brass bg-secondary/60 p-2">
-      <p className="px-1 font-mono text-[10px] uppercase tracking-[0.2em] text-muted-foreground">
+       <p className="px-1 font-mono text-[10px] uppercase tracking-[0.2em] text-green-ink">
         Time machine
       </p>
       <div className="mt-1 flex flex-wrap gap-1.5">

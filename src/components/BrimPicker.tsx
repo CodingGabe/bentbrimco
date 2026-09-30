@@ -1,5 +1,6 @@
 import { useRef, useState } from "react";
 import { HatProfile } from "./HatProfile";
+import { Button } from "@/components/ui/button";
 import { PRESETS, type BrimShape } from "@/lib/shop/types";
 
 function nearestPreset(curve: number, pinch: number) {
@@ -57,7 +58,8 @@ export function BrimPicker({
           pinch={value.pinch}
           className="mx-auto h-52 w-full max-w-sm"
         />
-        <button
+        <Button
+          variant="ghost"
           type="button"
           aria-label={`Crown pinch ${value.pinch} of 100. Use left and right arrow keys to adjust.`}
           onKeyDown={(e) => {
@@ -77,8 +79,8 @@ export function BrimPicker({
             aria-hidden
             className="absolute inset-[9px] rounded-full border border-foreground/70"
           />
-        </button>
-        <div className="absolute inset-x-4 bottom-3 flex justify-between font-mono text-[11px] uppercase tracking-widest text-muted-foreground">
+        </Button>
+        <div className="absolute inset-x-4 bottom-3 flex justify-between font-mono text-[11px] uppercase tracking-widest text-green-ink">
           <span>open crown</span>
           <span>drag the green</span>
           <span>tight pinch</span>
@@ -86,14 +88,15 @@ export function BrimPicker({
       </div>
 
       <div>
-        <p className="font-mono text-xs uppercase tracking-[0.2em] text-muted-foreground">
+        <p className="font-mono text-xs uppercase tracking-[0.2em] text-green-ink">
           Or snap to a known crease
         </p>
         <div className="mt-3 grid gap-2">
           {PRESETS.map((p) => {
             const active = value.preset === p.name;
             return (
-              <button
+              <Button
+                variant="ghost"
                 key={p.name}
                 type="button"
                  onClick={() => set(p.pinch, p.name, p.curve)}
@@ -109,7 +112,7 @@ export function BrimPicker({
                     {p.name}
                   </span>
                   <span
-                    className={`text-xs ${active ? "text-primary-foreground/75" : "text-muted-foreground"}`}
+                    className="text-xs text-muted-foreground"
                   >
                     {p.blurb}
                   </span>
@@ -119,7 +122,7 @@ export function BrimPicker({
                   pinch={p.pinch}
                   className="h-9 w-14 shrink-0 opacity-80"
                 />
-              </button>
+              </Button>
             );
           })}
         </div>

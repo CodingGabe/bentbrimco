@@ -13,7 +13,7 @@ export function SiteFooter() {
           </p>
         </div>
         <div className="font-mono text-xs text-muted-foreground">
-          <p className="uppercase tracking-[0.2em] text-foreground">Hours</p>
+           <p className="uppercase tracking-[0.2em] text-green-ink">Hours</p>
           <p className="mt-1">Thu–Sat 10–6</p>
           <p>Tue–Wed by appointment</p>
           <p>Sun–Mon closed</p>

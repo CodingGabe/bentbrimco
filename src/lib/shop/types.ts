@@ -63,7 +63,7 @@ export type BrimShape = {
 
 export type Branding = {
   text: string;
-  placement: "band" | "underbrim";
+  placement: "band" | "underbrim" | "side";
 };
 
 export const PRESETS: { name: string; curve: number; pinch: number; blurb: string }[] = [
