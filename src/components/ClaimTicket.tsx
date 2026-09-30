@@ -29,11 +29,11 @@ function Line({
   children: ReactNode;
 }) {
   return (
-    <div className="flex items-baseline justify-between gap-4 border-b border-dashed border-foreground/20 py-1.5">
-      <span className="font-mono text-[10px] uppercase tracking-[0.18em] text-green-ink">
+    <div className="grid grid-cols-[minmax(0,1fr)_minmax(0,1.4fr)] items-baseline gap-3 border-b border-dashed border-foreground/20 py-2">
+      <span className="min-w-0 font-mono text-[10px] uppercase text-green-ink">
         {label}
       </span>
-      <span className="text-right font-mono text-sm text-foreground">
+      <span className="min-w-0 break-words text-right font-mono text-sm text-foreground">
         {children}
       </span>
     </div>

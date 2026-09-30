@@ -40,7 +40,7 @@ export function BrimPicker({
   };
 
   return (
-    <div className="grid gap-5 md:grid-cols-[1.1fr_1fr]">
+    <div className="grid items-start gap-6 lg:grid-cols-[minmax(0,1.1fr)_minmax(0,1fr)] lg:gap-8">
       <div
         ref={padRef}
         className="relative h-72 touch-none rounded-sm border border-border bg-secondary/70 p-4 pb-12 shadow-[var(--shadow-lift)]"
@@ -80,7 +80,7 @@ export function BrimPicker({
             className="absolute inset-[9px] rounded-full border border-foreground/70"
           />
         </Button>
-        <div className="absolute inset-x-4 bottom-3 flex justify-between font-mono text-[11px] uppercase tracking-widest text-green-ink">
+        <div className="absolute inset-x-4 bottom-3 flex justify-between gap-2 font-mono text-[11px] uppercase text-green-ink">
           <span>open crown</span>
           <span>drag the green</span>
           <span>tight pinch</span>
@@ -91,7 +91,7 @@ export function BrimPicker({
         <p className="font-mono text-xs uppercase tracking-[0.2em] text-green-ink">
           Or snap to a known crease
         </p>
-        <div className="mt-3 grid gap-2">
+        <div className="mt-3 grid gap-3">
           {PRESETS.map((p) => {
             const active = value.preset === p.name;
             return (
@@ -101,18 +101,18 @@ export function BrimPicker({
                 type="button"
                  onClick={() => set(p.pinch, p.name, p.curve)}
                 aria-pressed={active}
-                className={`flex min-h-11 items-center justify-between gap-3 rounded-sm border px-3 py-2 text-left transition-colors ${
+                 className={`flex h-auto min-h-[76px] w-full items-center justify-between gap-4 whitespace-normal rounded-sm border px-4 py-3 text-left transition-colors ${
                   active
                      ? "border-foreground bg-green text-foreground"
                     : "border-border bg-paper hover:border-oxblood/60"
                 }`}
               >
-                <span>
-                  <span className="block font-display text-lg leading-tight">
+                 <span className="min-w-0 flex-1">
+                   <span className="block font-display text-xl leading-none">
                     {p.name}
                   </span>
                   <span
-                    className="text-xs text-muted-foreground"
+                     className="mt-1 block text-sm leading-snug text-muted-foreground"
                   >
                     {p.blurb}
                   </span>
@@ -120,7 +120,7 @@ export function BrimPicker({
                 <HatProfile
                   curve={p.curve}
                   pinch={p.pinch}
-                  className="h-9 w-14 shrink-0 opacity-80"
+                   className="h-10 w-14 shrink-0 opacity-80"
                 />
               </Button>
             );

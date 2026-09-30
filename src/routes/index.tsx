@@ -184,8 +184,8 @@ function Booker() {
 
       <main className="mx-auto max-w-7xl px-5 pt-8 md:pt-12">
         <Journey step={step} onSelect={setStep} />
-        <div className="mt-8 grid gap-10 md:grid-cols-[minmax(0,1fr)_320px] md:gap-16">
-        <div>
+        <div className="mt-8 grid items-start gap-10 md:grid-cols-[minmax(0,1fr)_320px] md:gap-12 lg:gap-16">
+        <div className="min-w-0">
           <AnimatePresence mode="wait" initial={false}>
           <motion.div key={step} initial={reducedMotion ? false : { opacity: 0, y: 20, scale: 0.985 }} animate={{ opacity: 1, y: 0, scale: 1 }} exit={reducedMotion ? { opacity: 1 } : { opacity: 0, y: -16, scale: 0.985 }} transition={{ duration: reducedMotion ? 0 : 0.28, ease: [0.22, 1, 0.36, 1] }}>
           {step === 0 && (
@@ -243,7 +243,7 @@ function Booker() {
                 <BrimPicker value={shape} onChange={setShape} />
               </div>
 
-              <div className="mt-8 grid gap-6 sm:grid-cols-2">
+               <div className="mt-8 grid gap-6 sm:grid-cols-2">
                 <fieldset>
                   <legend className="font-mono text-xs uppercase tracking-[0.2em] text-green-ink">
                     Felt or straw?
@@ -339,9 +339,9 @@ function Booker() {
               </div>
               <fieldset className="mt-6">
                 <legend className="text-xs font-semibold uppercase text-green-ink">Brim profile</legend>
-                <div className="mt-3 grid grid-cols-3 gap-2">
+                 <div className="mt-3 grid grid-cols-3 gap-3">
                   {([{ label: "Flat", curve: 15 }, { label: "Gentle curl", curve: 45 }, { label: "High roll", curve: 85 }] as const).map((option) => (
-                     <Button variant="ghost" key={option.label} type="button" aria-pressed={Math.abs(shape.curve - option.curve) < 15} onClick={() => setShape({ ...shape, curve: option.curve, preset: "Your own thing" })} className={`min-h-12 rounded-sm border px-2 text-sm font-medium ${Math.abs(shape.curve - option.curve) < 15 ? "border-foreground bg-green text-foreground hover:bg-green hover:text-foreground" : "border-border bg-paper"}`}>
+                      <Button variant="ghost" key={option.label} type="button" aria-pressed={Math.abs(shape.curve - option.curve) < 15} onClick={() => setShape({ ...shape, curve: option.curve, preset: "Your own thing" })} className={`h-auto min-h-12 whitespace-normal rounded-sm border px-3 py-2 text-center text-sm font-medium ${Math.abs(shape.curve - option.curve) < 15 ? "border-foreground bg-green text-foreground hover:bg-green hover:text-foreground" : "border-border bg-paper"}`}>
                       {option.label}
                     </Button>
                   ))}
@@ -366,7 +366,7 @@ function Booker() {
               </div>
               {branding && <div className="mt-6 max-w-md space-y-5">
                 <div><label htmlFor="brand-text" className="text-xs font-semibold uppercase text-green-ink">Initials or short name</label><input id="brand-text" maxLength={12} value={branding.text} onChange={(e) => setBranding({ ...branding, text: e.target.value })} placeholder="e.g. J.R." className="mt-2 min-h-12 w-full rounded-sm border border-border bg-paper px-3" /></div>
-                 <fieldset><legend className="text-xs font-semibold uppercase text-green-ink">Placement</legend><div className="mt-2 grid grid-cols-3 gap-2">{([{ value: "band", label: "Hatband" }, { value: "side", label: "Side of hat" }, { value: "underbrim", label: "Under brim" }] as const).map((p) => <Button variant="ghost" key={p.value} type="button" aria-pressed={branding.placement === p.value} onClick={() => setBranding({ ...branding, placement: p.value })} className={`min-h-11 flex-1 rounded-sm border px-3 ${branding.placement === p.value ? "border-foreground bg-green text-foreground hover:bg-green hover:text-foreground" : "border-border bg-paper"}`}>{p.label}</Button>)}</div></fieldset>
+                 <fieldset><legend className="text-xs font-semibold uppercase text-green-ink">Placement</legend><div className="mt-3 grid grid-cols-3 gap-3">{([{ value: "band", label: "Hatband" }, { value: "side", label: "Side of hat" }, { value: "underbrim", label: "Under brim" }] as const).map((p) => <Button variant="ghost" key={p.value} type="button" aria-pressed={branding.placement === p.value} onClick={() => setBranding({ ...branding, placement: p.value })} className={`h-auto min-h-12 flex-1 whitespace-normal rounded-sm border px-2 py-2 text-center ${branding.placement === p.value ? "border-foreground bg-green text-foreground hover:bg-green hover:text-foreground" : "border-border bg-paper"}`}>{p.label}</Button>)}</div></fieldset>
               </div>}
               <NextButton onClick={() => setStep(4)}>Next: pick a time</NextButton>
             </section>
@@ -714,12 +714,12 @@ function Journey({ step, onSelect }: { step: number; onSelect: (step: number) =>
   return (
     <nav ref={navRef} aria-label="Booking progress" className="overflow-x-auto pb-2">
       <div className="relative flex min-w-[630px] items-start justify-between px-2 pt-3">
-        <div aria-hidden className="booking-rope absolute left-[7%] right-[7%] top-[23px] h-[3px] opacity-45" />
-        <motion.div aria-hidden className="booking-rope absolute left-[7%] top-[23px] h-[3px] w-[86%] origin-left" initial={false} animate={{ scaleX: step / 6 }} transition={{ duration: reducedMotion ? 0 : 0.55, ease: [0.22, 1, 0.36, 1] }} />
+        <div aria-hidden className="booking-rope absolute left-[7%] right-[7%] top-[25px] h-[3px] opacity-60" />
+        <motion.div aria-hidden className="booking-rope absolute left-[7%] top-[25px] h-[3px] w-[86%] origin-left" initial={false} animate={{ scaleX: step / 6 }} transition={{ duration: reducedMotion ? 0 : 0.55, ease: [0.22, 1, 0.36, 1] }} />
         {STEP_LABELS.map((label, i) => (
-          <Button variant="ghost" key={label} type="button" disabled={i > step || i === step} onClick={() => onSelect(i)} aria-current={i === step ? "step" : undefined} className={`relative z-10 flex h-auto w-[88px] flex-col gap-1 whitespace-normal rounded-none p-0 text-center font-mono text-[10px] uppercase leading-tight hover:bg-transparent hover:text-green-ink ${i === step ? "text-green-ink" : "text-foreground"}`}>
-            <span className={`flex h-7 w-7 items-center justify-center rounded-full border-2 font-semibold ${i <= step ? "border-green-ink bg-green text-foreground" : "border-border bg-background text-foreground"}`}>
-              {i === step ? <img src={ropeArt.url} alt="" className="h-5 w-3 object-contain" /> : i < step ? "✓" : i + 1}
+          <Button variant="ghost" key={label} type="button" disabled={i > step || i === step} onClick={() => onSelect(i)} aria-current={i === step ? "step" : undefined} className={`relative z-10 flex h-auto w-[88px] flex-col gap-1.5 whitespace-normal rounded-none p-0 text-center font-mono text-[11px] font-semibold uppercase leading-tight disabled:opacity-100 hover:bg-transparent hover:text-green-ink ${i === step ? "text-green-ink" : "text-foreground"}`}>
+            <span className={`flex h-8 w-8 items-center justify-center rounded-full border-2 text-sm font-bold ${i === step ? "border-foreground bg-foreground text-primary-foreground" : i < step ? "border-foreground bg-green text-foreground" : "border-foreground bg-background text-foreground"}`}>
+              {i + 1}
             </span>
             <span>{label}</span>
           </Button>
