@@ -9,3 +9,4 @@
 - [x] Owner Bench `/shop` — board, requests, no-show radar, waitlist, message log, rules, hours saved
 - [x] Time Machine + reset demo
 - [x] About page, footer, head metadata, verified in browser (desktop + phone)
+- [x] Refresh the customer layout and typography with the supplied Tanker font and an editorial workshop photograph.

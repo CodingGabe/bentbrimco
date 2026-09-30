@@ -5,6 +5,7 @@ import { ClaimTicket, type TicketDraft } from "@/components/ClaimTicket";
 import { HatProfile } from "@/components/HatProfile";
 import { SiteFooter } from "@/components/SiteFooter";
 import { Steam } from "@/components/Steam";
+import workshopImage from "@/assets/hat-workshop.jpg";
 import { downloadIcs } from "@/lib/shop/ics";
 import { buildAvailability } from "@/lib/shop/rules";
 import { makePickupCode, makeTicketCode, nextId } from "@/lib/shop/seed";
@@ -34,6 +35,8 @@ export const Route = createFileRoute("/")({
         content:
           "Hat's lost its nerve? Build your claim ticket and Sol takes it from there. No login, no DM tag.",
       },
+      { property: "og:type", content: "website" },
+      { name: "twitter:card", content: "summary_large_image" },
     ],
   }),
   component: Booker,
@@ -142,42 +145,43 @@ function Booker() {
 
   return (
     <div className="min-h-screen pb-40 md:pb-0">
-      <div aria-hidden className="hatband h-2 w-full" />
-      <header className="mx-auto flex max-w-6xl items-center justify-between px-5 py-4">
-        <Link to="/" className="font-display text-xl tracking-tight">
-          Bent Brim Co.
-        </Link>
-        <Link
-          to="/shop"
-          className="font-mono text-[11px] uppercase tracking-[0.2em] text-muted-foreground hover:text-oxblood"
-        >
-          The Bench
-        </Link>
+      <div className="border-b border-border bg-secondary py-2 text-center text-xs font-medium uppercase text-foreground">
+        Shaped by hand on South Congress · Austin, Texas
+      </div>
+      <header className="border-b border-border bg-card">
+        <div className="mx-auto flex max-w-7xl items-center justify-between gap-4 px-5 py-4">
+          <Link to="/" className="font-display text-3xl uppercase leading-none sm:text-4xl">
+            Bent Brim Co.
+          </Link>
+          <nav className="flex items-center gap-4 text-xs font-semibold uppercase sm:gap-8 sm:text-sm" aria-label="Main navigation">
+            <Link to="/" className="hover:text-oxblood">Book a hat</Link>
+            <Link to="/shop" className="hover:text-oxblood">The Bench</Link>
+            <Link to="/about" className="hidden hover:text-oxblood sm:block">Our story</Link>
+          </nav>
+        </div>
       </header>
 
-      <main className="mx-auto grid max-w-6xl gap-10 px-5 pt-4 md:grid-cols-[1.35fr_0.65fr] md:pt-8">
+      {step === 0 && (
+        <section className="relative isolate flex min-h-[340px] items-end overflow-hidden bg-felt sm:min-h-[410px]" aria-label="Bent Brim hat shaping workshop">
+          <img src={workshopImage} alt="A hatmaker shaping a felt western hat by hand at the workbench" width={1536} height={864} className="absolute inset-0 -z-20 h-full w-full object-cover object-center" />
+          <div className="absolute inset-0 -z-10 bg-[linear-gradient(0deg,var(--hero-shade),transparent_75%)]" />
+          <div className="mx-auto w-full max-w-7xl px-5 pb-8 pt-20 text-primary-foreground sm:pb-12">
+            <p className="text-xs font-semibold uppercase">Steam · Crease · Fit · Restore</p>
+            <h1 className="mt-3 max-w-2xl font-display text-5xl uppercase leading-none sm:text-7xl">Good hats get a second life.</h1>
+            <p className="mt-3 max-w-lg text-base sm:text-lg">Eleven years at the steam kettle. One pair of hands. Tell us what your hat needs.</p>
+          </div>
+        </section>
+      )}
+
+      <main className="mx-auto grid max-w-7xl gap-10 px-5 pt-8 md:grid-cols-[minmax(0,1fr)_320px] md:gap-16 md:pt-12">
         <div>
           {step === 0 && (
             <section>
-              <p className="font-mono text-xs uppercase tracking-[0.25em] text-oxblood">
-                Steam · Crease · Fit · Restore
-              </p>
-              <h1 className="mt-3 max-w-xl text-6xl leading-[0.9] sm:text-7xl">
-                Hat's lost
-                <br />
-                its nerve?
-                <br />
-                <span className="text-oxblood">We'll fix that.</span>
-              </h1>
-              <p className="mt-5 max-w-md text-lg text-muted-foreground">
-                Eleven years at the steam kettle, one pair of hands. Tell me
-                what's wrong and you'll walk out of here booked.
-              </p>
-
-              <h2 className="mt-12 font-mono text-xs uppercase tracking-[0.25em] text-muted-foreground">
-                Step 1 · What's wrong with the hat?
+              <p className="text-xs font-semibold uppercase text-oxblood">01 / Choose your service</p>
+              <h2 className="mt-2 font-display text-3xl uppercase leading-none sm:text-4xl">
+                What does your hat need?
               </h2>
-              <ul className="mt-4 space-y-3">
+              <ul className="mt-6 divide-y divide-border border-y border-border">
                 {SERVICES.map((s, i) => (
                   <li key={s.id}>
                     <button
@@ -188,10 +192,10 @@ function Booker() {
                         setStep(1);
                       }}
                       style={{ animationDelay: `${i * 60}ms` }}
-                      className="animate-tag group flex w-full items-center justify-between gap-4 rounded-sm border border-border bg-paper px-4 py-4 text-left transition-all hover:-translate-y-0.5 hover:border-oxblood hover:shadow-[var(--shadow-lift)]"
+                      className="group flex w-full items-center justify-between gap-4 px-2 py-5 text-left transition-colors hover:bg-secondary sm:px-4"
                     >
                       <span className="min-w-0">
-                        <span className="block font-display text-2xl leading-tight">
+                        <span className="block font-display text-2xl uppercase leading-tight">
                           {s.plain}
                         </span>
                         <span className="mt-1 block text-sm text-muted-foreground">
@@ -208,7 +212,7 @@ function Booker() {
                   </li>
                 ))}
               </ul>
-              <p className="mt-4 font-mono text-xs text-muted-foreground">
+              <p className="mt-5 text-sm text-muted-foreground">
                 Need it by a date? Say so at step three — rush is +${RUSH_FEE},
                 and only when the drying time actually allows it.
               </p>
@@ -597,7 +601,7 @@ function Booker() {
         </div>
 
         {/* Ticket: side rail on desktop */}
-        <aside className="hidden md:block">
+        <aside className="hidden border-l border-border pl-8 md:block">
           <div className="sticky top-8">
             <Progress step={step} />
             <div className="mt-4">

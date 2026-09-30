@@ -21,6 +21,8 @@ export const Route = createFileRoute("/t/$code")({
         property: "og:description",
         content: "Reschedule or cancel your hat appointment. No login, no DM tag.",
       },
+      { property: "og:type", content: "website" },
+      { name: "twitter:card", content: "summary_large_image" },
       { name: "robots", content: "noindex" },
     ],
   }),

@@ -35,6 +35,8 @@ export const Route = createFileRoute("/shop")({
         content:
           "One board, one tap per hat. Reminders, waitlist refills, and pickup chasing run themselves.",
       },
+      { property: "og:type", content: "website" },
+      { name: "twitter:card", content: "summary_large_image" },
     ],
   }),
   component: Bench,

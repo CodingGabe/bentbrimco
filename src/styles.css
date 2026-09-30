@@ -4,11 +4,15 @@
 
 @custom-variant dark (&:is(.dark *));
 
-/*
- * Bent Brim Co. design system.
- * Raw felt cream base, bench charcoal ink, oxblood accent, brass highlight,
- * faded sage for status. Warm shadows only.
- */
+/* Bent Brim Co. editorial workshop design system. */
+
+@font-face {
+  font-family: "Tanker";
+  src: url("/__l5e/assets-v1/5640f15b-5406-4896-bf94-78865df3bb86/Tanker-Regular.otf") format("opentype");
+  font-weight: 400;
+  font-style: normal;
+  font-display: swap;
+}
 
 @theme inline {
   --radius-sm: calc(var(--radius) - 4px);
@@ -40,39 +44,40 @@
   --color-oxblood: var(--oxblood);
   --color-paper: var(--paper);
   --color-felt: var(--felt);
-  --font-display: "Young Serif", "Iowan Old Style", Georgia, serif;
-  --font-mono: "DM Mono", ui-monospace, "SFMono-Regular", monospace;
-  --font-sans: "Instrument Sans", "Helvetica Neue", system-ui, sans-serif;
+  --font-display: "Tanker", Impact, sans-serif;
+  --font-mono: "Instrument Sans", Arial, sans-serif;
+  --font-sans: "Instrument Sans", Arial, sans-serif;
   --shadow-bench: 0 18px 40px -24px oklch(0.21 0.02 60 / 0.55);
   --shadow-lift: 0 10px 24px -14px oklch(0.21 0.02 60 / 0.6);
 }
 
 :root {
   --radius: 0.4rem;
-  --background: oklch(0.932 0.022 84.5);
+  --background: oklch(0.99 0.004 85);
   --foreground: oklch(0.223 0.011 60);
-  --card: oklch(0.962 0.014 86);
+  --card: oklch(1 0 0);
   --card-foreground: oklch(0.223 0.011 60);
-  --popover: oklch(0.962 0.014 86);
+  --popover: oklch(1 0 0);
   --popover-foreground: oklch(0.223 0.011 60);
   --primary: oklch(0.36 0.115 27.5);
   --primary-foreground: oklch(0.962 0.014 86);
-  --secondary: oklch(0.882 0.024 84);
+  --secondary: oklch(0.962 0.012 75);
   --secondary-foreground: oklch(0.223 0.011 60);
-  --muted: oklch(0.888 0.02 84);
+  --muted: oklch(0.95 0.012 75);
   --muted-foreground: oklch(0.45 0.014 63);
   --accent: oklch(0.66 0.098 84);
   --accent-foreground: oklch(0.223 0.011 60);
   --destructive: oklch(0.47 0.16 27);
   --destructive-foreground: oklch(0.962 0.014 86);
-  --border: oklch(0.8 0.024 78);
-  --input: oklch(0.8 0.024 78);
+  --border: oklch(0.86 0.01 75);
+  --input: oklch(0.86 0.01 75);
   --ring: oklch(0.36 0.115 27.5);
   --oxblood: oklch(0.36 0.115 27.5);
   --brass: oklch(0.66 0.098 84);
   --sage: oklch(0.6 0.042 130);
-  --paper: oklch(0.975 0.012 88);
+  --paper: oklch(1 0 0);
   --felt: oklch(0.26 0.012 60);
+  --hero-shade: oklch(0.16 0.014 55 / 0.86);
 }
 
 @layer base {
@@ -88,19 +93,13 @@
     background-color: var(--color-background);
     color: var(--color-foreground);
     font-family: var(--font-sans);
-    background-image:
-      radial-gradient(
-        oklch(0.21 0.02 60 / 0.045) 1px,
-        transparent 1px
-      );
-    background-size: 4px 4px;
   }
 
   h1,
   h2,
   h3 {
     font-family: var(--font-display);
-    letter-spacing: -0.02em;
+    letter-spacing: 0;
   }
 
   :focus-visible {

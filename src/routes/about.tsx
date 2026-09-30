@@ -16,6 +16,8 @@ export const Route = createFileRoute("/about")({
         content:
           "A fictional hat shop, a very real scheduling problem. Here's what the booking flow and the Bench are actually doing.",
       },
+      { property: "og:type", content: "website" },
+      { name: "twitter:card", content: "summary_large_image" },
     ],
   }),
   component: About,
