@@ -1,5 +1,8 @@
 import { createFileRoute, Link } from "@tanstack/react-router";
-import { useMemo, useState } from "react";
+import { useEffect, useMemo, useRef, useState } from "react";
+import { AnimatePresence, motion, useReducedMotion } from "motion/react";
+import ropeArt from "@/assets/rope.svg.asset.json";
+import { Button } from "@/components/ui/button";
 import { BrimPicker } from "@/components/BrimPicker";
 import { ClaimTicket, type TicketDraft } from "@/components/ClaimTicket";
 import { HatProfile } from "@/components/HatProfile";
@@ -54,6 +57,7 @@ const STEP_LABELS = [
 
 function Booker() {
   const { state, actions } = useShop();
+  const reducedMotion = useReducedMotion();
   const [step, setStep] = useState(0);
   const [service, setService] = useState<Service | null>(null);
   const [shape, setShape] = useState<BrimShape>({
@@ -61,7 +65,7 @@ function Booker() {
     curve: PRESETS[0]!.curve,
     pinch: PRESETS[0]!.pinch,
   });
-  const [branding, setBranding] = useState<{ text: string; placement: "band" | "underbrim" } | null>(null);
+  const [branding, setBranding] = useState<{ text: string; placement: "band" | "underbrim" | "side" } | null>(null);
   const [material, setMaterial] = useState<"felt" | "straw">("felt");
   const [size, setSize] = useState("Not sure, Sol will measure");
   const [photoName, setPhotoName] = useState<string | undefined>();
@@ -171,25 +175,30 @@ function Booker() {
           <img src={heroPhoto.url} alt="A cowboy in a black western hat sitting beside a horse" width={2000} height={1333} className="absolute inset-0 -z-20 h-full w-full object-cover object-center" />
           <div className="absolute inset-0 -z-10 bg-[linear-gradient(0deg,var(--hero-shade),transparent_75%)]" />
           <div className="mx-auto w-full max-w-7xl px-5 pb-8 pt-20 text-primary-foreground sm:pb-12">
-            <p className="text-xs font-semibold uppercase">Steam · Crease · Fit · Restore</p>
+            <p className="text-xs font-semibold uppercase text-green-on-dark">Steam · Crease · Fit · Restore</p>
             <h1 className="mt-3 max-w-2xl font-display text-5xl uppercase leading-none sm:text-7xl">Good hats get a second life.</h1>
             <p className="mt-3 max-w-lg text-base sm:text-lg">Eleven years at the steam kettle. One pair of hands. Tell us what your hat needs.</p>
           </div>
         </section>
       )}
 
-      <main className="mx-auto grid max-w-7xl gap-10 px-5 pt-8 md:grid-cols-[minmax(0,1fr)_320px] md:gap-16 md:pt-12">
+      <main className="mx-auto max-w-7xl px-5 pt-8 md:pt-12">
+        <Journey step={step} onSelect={setStep} />
+        <div className="mt-8 grid gap-10 md:grid-cols-[minmax(0,1fr)_320px] md:gap-16">
         <div>
+          <AnimatePresence mode="wait" initial={false}>
+          <motion.div key={step} initial={reducedMotion ? false : { opacity: 0, y: 20, scale: 0.985 }} animate={{ opacity: 1, y: 0, scale: 1 }} exit={reducedMotion ? { opacity: 1 } : { opacity: 0, y: -16, scale: 0.985 }} transition={{ duration: reducedMotion ? 0 : 0.28, ease: [0.22, 1, 0.36, 1] }}>
           {step === 0 && (
             <section>
-              <p className="text-xs font-semibold uppercase text-oxblood">01 / Choose your service</p>
+              <p className="text-xs font-semibold uppercase text-green-ink">01 / Choose your service</p>
               <h2 className="mt-2 font-display text-3xl uppercase leading-none sm:text-4xl">
                 What does your hat need?
               </h2>
               <ul className="mt-6 divide-y divide-border border-y border-border">
                 {SERVICES.map((s, i) => (
                   <li key={s.id}>
-                    <button
+                    <Button
+                      variant="ghost"
                       type="button"
                       onClick={() => {
                         setService(s);
@@ -197,7 +206,7 @@ function Booker() {
                         setStep(1);
                       }}
                       style={{ animationDelay: `${i * 60}ms` }}
-                      className="group flex w-full items-center justify-between gap-4 px-2 py-5 text-left transition-colors hover:bg-secondary sm:px-4"
+                       className="group flex h-auto min-h-20 w-full items-center justify-between gap-4 whitespace-normal px-2 py-5 text-left transition-colors hover:bg-secondary sm:px-4"
                     >
                       <span className="min-w-0">
                         <span className="block font-display text-2xl uppercase leading-tight">
@@ -213,7 +222,7 @@ function Booker() {
                           {s.dropOffOnly ? "drop-off" : `${s.minutes} min`}
                         </span>
                       </span>
-                    </button>
+                    </Button>
                   </li>
                 ))}
               </ul>
@@ -236,12 +245,13 @@ function Booker() {
 
               <div className="mt-8 grid gap-6 sm:grid-cols-2">
                 <fieldset>
-                  <legend className="font-mono text-xs uppercase tracking-[0.2em] text-muted-foreground">
+                  <legend className="font-mono text-xs uppercase tracking-[0.2em] text-green-ink">
                     Felt or straw?
                   </legend>
                   <div className="mt-2 flex gap-2">
                     {(["felt", "straw"] as const).map((m) => (
-                      <button
+                      <Button
+                      variant="ghost"
                         key={m}
                         type="button"
                         aria-pressed={material === m}
@@ -250,13 +260,13 @@ function Booker() {
                           setSlot(null);
                         }}
                         className={`min-h-11 flex-1 rounded-sm border px-3 capitalize ${
-                          material === m
-                            ? "border-oxblood bg-oxblood text-primary-foreground"
+                           material === m
+                             ? "border-oxblood bg-oxblood text-primary-foreground hover:bg-oxblood hover:text-primary-foreground"
                             : "border-border bg-paper"
                         }`}
                       >
                         {m}
-                      </button>
+                      </Button>
                     ))}
                   </div>
                   <p className="mt-2 text-xs text-muted-foreground">
@@ -267,7 +277,7 @@ function Booker() {
                 <div>
                   <label
                     htmlFor="size"
-                    className="font-mono text-xs uppercase tracking-[0.2em] text-muted-foreground"
+                    className="font-mono text-xs uppercase tracking-[0.2em] text-green-ink"
                   >
                     Hat size
                   </label>
@@ -296,7 +306,7 @@ function Booker() {
               <div className="mt-6">
                 <label
                   htmlFor="photo"
-                  className="font-mono text-xs uppercase tracking-[0.2em] text-muted-foreground"
+                  className="font-mono text-xs uppercase tracking-[0.2em] text-green-ink"
                 >
                   Photo of the hat (optional)
                 </label>
@@ -328,15 +338,15 @@ function Booker() {
                 <HatProfile curve={shape.curve} pinch={shape.pinch} className="mx-auto h-56 w-full max-w-md" />
               </div>
               <fieldset className="mt-6">
-                <legend className="text-xs font-semibold uppercase text-muted-foreground">Brim profile</legend>
+                <legend className="text-xs font-semibold uppercase text-green-ink">Brim profile</legend>
                 <div className="mt-3 grid grid-cols-3 gap-2">
                   {([{ label: "Flat", curve: 15 }, { label: "Gentle curl", curve: 45 }, { label: "High roll", curve: 85 }] as const).map((option) => (
-                    <button key={option.label} type="button" aria-pressed={Math.abs(shape.curve - option.curve) < 15} onClick={() => setShape({ ...shape, curve: option.curve, preset: "Your own thing" })} className={`min-h-12 rounded-sm border px-2 text-sm font-medium ${Math.abs(shape.curve - option.curve) < 15 ? "border-foreground bg-green text-foreground" : "border-border bg-paper"}`}>
+                     <Button variant="ghost" key={option.label} type="button" aria-pressed={Math.abs(shape.curve - option.curve) < 15} onClick={() => setShape({ ...shape, curve: option.curve, preset: "Your own thing" })} className={`min-h-12 rounded-sm border px-2 text-sm font-medium ${Math.abs(shape.curve - option.curve) < 15 ? "border-foreground bg-green text-foreground hover:bg-green hover:text-foreground" : "border-border bg-paper"}`}>
                       {option.label}
-                    </button>
+                    </Button>
                   ))}
                 </div>
-                <label htmlFor="brim-curve" className="mt-6 flex justify-between text-xs font-semibold uppercase text-muted-foreground"><span>Brim curl</span><span>{shape.curve}%</span></label>
+                <label htmlFor="brim-curve" className="mt-6 flex justify-between text-xs font-semibold uppercase text-green-ink"><span>Brim curl</span><span>{shape.curve}%</span></label>
                 <input id="brim-curve" type="range" min="0" max="100" value={shape.curve} onChange={(e) => setShape({ ...shape, curve: Number(e.target.value), preset: "Your own thing" })} className="mt-2 h-11 w-full accent-[var(--color-green)]" />
               </fieldset>
               <NextButton onClick={() => setStep(3)}>Next: branding</NextButton>
@@ -348,15 +358,15 @@ function Booker() {
               <StepHead n={4} title="Make it yours" onBack={() => setStep(2)} />
               <p className="mt-2 max-w-md text-muted-foreground">Branding is optional. Add short initials or a name for Sol to mark on the hat.</p>
               <div className="mt-6 bg-secondary/60 p-5 sm:p-8">
-                <HatProfile curve={shape.curve} pinch={shape.pinch} branding={branding?.placement === "band" ? branding.text : undefined} className="mx-auto h-56 w-full max-w-md" />
+                <HatProfile curve={shape.curve} pinch={shape.pinch} branding={branding} className="mx-auto h-56 w-full max-w-md" />
               </div>
               <div className="mt-6 flex flex-wrap gap-2">
-                <button type="button" aria-pressed={!branding} onClick={() => setBranding(null)} className={`min-h-11 rounded-sm border px-4 ${!branding ? "border-foreground bg-green text-foreground" : "border-border bg-paper"}`}>No branding</button>
-                <button type="button" aria-pressed={!!branding} onClick={() => setBranding(branding ?? { text: "", placement: "band" })} className={`min-h-11 rounded-sm border px-4 ${branding ? "border-foreground bg-green text-foreground" : "border-border bg-paper"}`}>Add branding</button>
+                 <Button variant="ghost" type="button" aria-pressed={!branding} onClick={() => setBranding(null)} className={`min-h-11 rounded-sm border px-4 ${!branding ? "border-foreground bg-green text-foreground hover:bg-green hover:text-foreground" : "border-border bg-paper"}`}>No branding</Button>
+                 <Button variant="ghost" type="button" aria-pressed={!!branding} onClick={() => setBranding(branding ?? { text: "", placement: "band" })} className={`min-h-11 rounded-sm border px-4 ${branding ? "border-foreground bg-green text-foreground hover:bg-green hover:text-foreground" : "border-border bg-paper"}`}>Add branding</Button>
               </div>
               {branding && <div className="mt-6 max-w-md space-y-5">
-                <div><label htmlFor="brand-text" className="text-xs font-semibold uppercase text-muted-foreground">Initials or short name</label><input id="brand-text" maxLength={12} value={branding.text} onChange={(e) => setBranding({ ...branding, text: e.target.value })} placeholder="e.g. J.R." className="mt-2 min-h-12 w-full rounded-sm border border-border bg-paper px-3" /></div>
-                <fieldset><legend className="text-xs font-semibold uppercase text-muted-foreground">Placement</legend><div className="mt-2 flex gap-2">{([{ value: "band", label: "Hatband" }, { value: "underbrim", label: "Under brim" }] as const).map((p) => <button key={p.value} type="button" aria-pressed={branding.placement === p.value} onClick={() => setBranding({ ...branding, placement: p.value })} className={`min-h-11 flex-1 rounded-sm border px-3 ${branding.placement === p.value ? "border-foreground bg-green text-foreground" : "border-border bg-paper"}`}>{p.label}</button>)}</div></fieldset>
+                <div><label htmlFor="brand-text" className="text-xs font-semibold uppercase text-green-ink">Initials or short name</label><input id="brand-text" maxLength={12} value={branding.text} onChange={(e) => setBranding({ ...branding, text: e.target.value })} placeholder="e.g. J.R." className="mt-2 min-h-12 w-full rounded-sm border border-border bg-paper px-3" /></div>
+                 <fieldset><legend className="text-xs font-semibold uppercase text-green-ink">Placement</legend><div className="mt-2 grid grid-cols-3 gap-2">{([{ value: "band", label: "Hatband" }, { value: "side", label: "Side of hat" }, { value: "underbrim", label: "Under brim" }] as const).map((p) => <Button variant="ghost" key={p.value} type="button" aria-pressed={branding.placement === p.value} onClick={() => setBranding({ ...branding, placement: p.value })} className={`min-h-11 flex-1 rounded-sm border px-3 ${branding.placement === p.value ? "border-foreground bg-green text-foreground hover:bg-green hover:text-foreground" : "border-border bg-paper"}`}>{p.label}</Button>)}</div></fieldset>
               </div>}
               <NextButton onClick={() => setStep(4)}>Next: pick a time</NextButton>
             </section>
@@ -367,18 +377,20 @@ function Booker() {
               <StepHead n={5} title="When do you need it?" onBack={() => setStep(3)} />
               <div className="mt-5 rounded-sm border border-border bg-paper p-4">
                 <div className="flex flex-wrap items-center gap-3">
-                  <button
+                  <Button
+                      variant="ghost"
                     type="button"
                     aria-pressed={!hasDeadline}
                     onClick={() => {
                       setHasDeadline(false);
                       setSlot(null);
                     }}
-                    className={`min-h-11 rounded-sm border px-4 ${!hasDeadline ? "border-oxblood bg-oxblood text-primary-foreground" : "border-border"}`}
+                     className={`min-h-11 rounded-sm border px-4 ${!hasDeadline ? "border-oxblood bg-oxblood text-primary-foreground hover:bg-oxblood hover:text-primary-foreground" : "border-border"}`}
                   >
                     No hard date
-                  </button>
-                  <button
+                  </Button>
+                  <Button
+                      variant="ghost"
                     type="button"
                     aria-pressed={hasDeadline}
                     onClick={() => {
@@ -391,10 +403,10 @@ function Booker() {
                             .slice(0, 10),
                         );
                     }}
-                    className={`min-h-11 rounded-sm border px-4 ${hasDeadline ? "border-oxblood bg-oxblood text-primary-foreground" : "border-border"}`}
+                     className={`min-h-11 rounded-sm border px-4 ${hasDeadline ? "border-oxblood bg-oxblood text-primary-foreground hover:bg-oxblood hover:text-primary-foreground" : "border-border"}`}
                   >
                     I need it by…
-                  </button>
+                  </Button>
                   {hasDeadline && (
                     <label className="flex items-center gap-2">
                       <span className="sr-only">Deadline date</span>
@@ -444,7 +456,8 @@ function Booker() {
                           {day.slots.map((s, i) => {
                             const active = slot?.start === s.start;
                             return (
-                              <button
+                              <Button
+                      variant="ghost"
                                 key={s.start}
                                 type="button"
                                 onClick={() => setSlot(s)}
@@ -452,18 +465,18 @@ function Booker() {
                                 style={{ animationDelay: `${i * 40}ms` }}
                                 className={`animate-tag min-h-11 rounded-sm border px-3 py-2 text-left font-mono text-sm ${
                                   active
-                                    ? "border-oxblood bg-oxblood text-primary-foreground"
+                                     ? "border-oxblood bg-oxblood text-primary-foreground hover:bg-oxblood hover:text-primary-foreground"
                                     : "border-border bg-paper hover:border-oxblood/60"
                                 }`}
                               >
                                 <span className="block">{fmtTime(s.start)}</span>
                                 <span
-                                  className={`block text-[10px] uppercase tracking-widest ${active ? "text-primary-foreground/75" : "text-muted-foreground"}`}
+                                  className={`block text-[10px] uppercase tracking-widest ${active ? "text-primary-foreground" : "text-muted-foreground"}`}
                                 >
                                   {s.mode === "bar" ? "Bar session" : "Drop-off"}
                                   {s.rush ? " · rush" : ""}
                                 </span>
-                              </button>
+                              </Button>
                             );
                           })}
                         </div>
@@ -497,7 +510,7 @@ function Booker() {
                 }}
               >
                 <div>
-                  <label htmlFor="name" className="font-mono text-xs uppercase tracking-[0.2em] text-muted-foreground">
+                  <label htmlFor="name" className="font-mono text-xs uppercase tracking-[0.2em] text-green-ink">
                     Name
                   </label>
                   <input
@@ -509,7 +522,7 @@ function Booker() {
                   />
                 </div>
                 <div>
-                  <label htmlFor="phone" className="font-mono text-xs uppercase tracking-[0.2em] text-muted-foreground">
+                  <label htmlFor="phone" className="font-mono text-xs uppercase tracking-[0.2em] text-green-ink">
                     Mobile
                   </label>
                   <input
@@ -554,12 +567,13 @@ function Booker() {
 
                 <div className="relative">
                   <Steam />
-                  <button
+                  <Button
+                      variant="ghost"
                     type="submit"
                     className="min-h-12 w-full rounded-sm bg-oxblood px-5 font-display text-xl text-primary-foreground transition-transform hover:-translate-y-0.5"
                   >
                     Pay ${state?.rules.deposit ?? 15} and tear the ticket
-                  </button>
+                  </Button>
                 </div>
               </form>
             </section>
@@ -567,7 +581,7 @@ function Booker() {
 
           {step === 6 && booked && (
             <section>
-              <p className="font-mono text-xs uppercase tracking-[0.25em] text-oxblood">
+              <p className="font-mono text-xs uppercase tracking-[0.25em] text-green-ink">
                  Step 7 · Done
               </p>
               <h1 className="mt-3 text-6xl leading-[0.9]">
@@ -585,13 +599,13 @@ function Booker() {
 
               <dl className="mt-8 grid max-w-md grid-cols-2 gap-4 font-mono text-sm">
                 <div>
-                  <dt className="text-[10px] uppercase tracking-[0.2em] text-muted-foreground">
+                  <dt className="text-[10px] uppercase tracking-[0.2em] text-green-ink">
                     Ticket
                   </dt>
                   <dd className="text-lg text-oxblood">{booked.code}</dd>
                 </div>
                 <div>
-                  <dt className="text-[10px] uppercase tracking-[0.2em] text-muted-foreground">
+                  <dt className="text-[10px] uppercase tracking-[0.2em] text-green-ink">
                     Pickup code
                   </dt>
                   <dd className="text-lg tracking-[0.3em] text-oxblood">
@@ -599,7 +613,7 @@ function Booker() {
                   </dd>
                 </div>
                 <div className="col-span-2">
-                  <dt className="text-[10px] uppercase tracking-[0.2em] text-muted-foreground">
+                  <dt className="text-[10px] uppercase tracking-[0.2em] text-green-ink">
                     Where
                   </dt>
                   <dd>1512 S Congress Ave, Austin</dd>
@@ -607,13 +621,14 @@ function Booker() {
               </dl>
 
               <div className="mt-6 flex flex-wrap gap-3">
-                <button
+                <Button
+                      variant="ghost"
                   type="button"
                   onClick={() => downloadIcs(booked)}
                   className="min-h-12 rounded-sm border border-foreground px-5 font-mono text-sm uppercase tracking-widest hover:bg-secondary"
                 >
                   Add to calendar
-                </button>
+                </Button>
                 <Link
                   to="/t/$code"
                   params={{ code: booked.code }}
@@ -624,7 +639,7 @@ function Booker() {
               </div>
 
               <div className="mt-8 max-w-md rounded-sm border border-border bg-secondary/60 p-4">
-                <p className="font-mono text-[10px] uppercase tracking-[0.2em] text-muted-foreground">
+                <p className="font-mono text-[10px] uppercase tracking-[0.2em] text-green-ink">
                   Text just sent to {booked.phone}
                 </p>
                 <p className="mt-2 rounded-sm bg-paper p-3 font-mono text-sm">
@@ -644,17 +659,19 @@ function Booker() {
               </p>
             </section>
           )}
+          </motion.div>
+          </AnimatePresence>
         </div>
 
         {/* Ticket: side rail on desktop */}
         <aside className="hidden border-l border-border pl-8 md:block">
           <div className="sticky top-8">
-            <Progress step={step} />
-            <div className="mt-4">
+            <div>
               <ClaimTicket draft={draft} stamped={step === 6} />
             </div>
           </div>
         </aside>
+        </div>
       </main>
 
       {/* Ticket: bottom sheet on mobile */}
@@ -664,7 +681,8 @@ function Booker() {
             <ClaimTicket draft={draft} stamped={step === 6} />
           </div>
         )}
-        <button
+        <Button
+                      variant="ghost"
           type="button"
           onClick={() => setSheetOpen((v) => !v)}
           aria-expanded={sheetOpen}
@@ -674,12 +692,12 @@ function Booker() {
             <span className="block font-display text-lg leading-tight">
               Your claim ticket
             </span>
-            <span className="block font-mono text-[10px] uppercase tracking-[0.2em] text-muted-foreground">
+            <span className="block font-mono text-[10px] uppercase tracking-[0.2em] text-green-ink">
                {STEP_LABELS[step]} · step {Math.min(step + 1, 7)} of 7
             </span>
           </span>
-          <HatProfile curve={shape.curve} pinch={shape.pinch} className="h-8 w-12" />
-        </button>
+          <HatProfile curve={shape.curve} pinch={shape.pinch} className="h-8 w-12" branding={branding} />
+        </Button>
       </div>
 
       <SiteFooter />
@@ -687,25 +705,27 @@ function Booker() {
   );
 }
 
-function Progress({ step }: { step: number }) {
+function Journey({ step, onSelect }: { step: number; onSelect: (step: number) => void }) {
+  const navRef = useRef<HTMLElement>(null);
+  const reducedMotion = useReducedMotion();
+  useEffect(() => {
+    navRef.current?.scrollTo({ left: Math.max(0, (step - 1) * 90), behavior: reducedMotion ? "instant" : "smooth" });
+  }, [step, reducedMotion]);
   return (
-    <ol className="flex flex-wrap gap-x-3 gap-y-1 font-mono text-[10px] uppercase tracking-[0.18em]">
-      {STEP_LABELS.map((l, i) => (
-        <li
-          key={l}
-          className={
-            i === step
-              ? "text-oxblood"
-              : i < step
-                ? "text-foreground"
-                : "text-muted-foreground/60"
-          }
-        >
-          {i < step ? "✓ " : ""}
-          {l}
-        </li>
-      ))}
-    </ol>
+    <nav ref={navRef} aria-label="Booking progress" className="overflow-x-auto pb-2">
+      <div className="relative flex min-w-[630px] items-start justify-between px-2 pt-3">
+        <div aria-hidden className="booking-rope absolute left-[7%] right-[7%] top-[23px] h-[3px] opacity-45" />
+        <motion.div aria-hidden className="booking-rope absolute left-[7%] top-[23px] h-[3px] w-[86%] origin-left" initial={false} animate={{ scaleX: step / 6 }} transition={{ duration: reducedMotion ? 0 : 0.55, ease: [0.22, 1, 0.36, 1] }} />
+        {STEP_LABELS.map((label, i) => (
+          <Button variant="ghost" key={label} type="button" disabled={i > step || i === step} onClick={() => onSelect(i)} aria-current={i === step ? "step" : undefined} className={`relative z-10 flex h-auto w-[88px] flex-col gap-1 whitespace-normal rounded-none p-0 text-center font-mono text-[10px] uppercase leading-tight hover:bg-transparent hover:text-green-ink ${i === step ? "text-green-ink" : "text-foreground"}`}>
+            <span className={`flex h-7 w-7 items-center justify-center rounded-full border-2 font-semibold ${i <= step ? "border-green-ink bg-green text-foreground" : "border-border bg-background text-foreground"}`}>
+              {i === step ? <img src={ropeArt.url} alt="" className="h-5 w-3 object-contain" /> : i < step ? "✓" : i + 1}
+            </span>
+            <span>{label}</span>
+          </Button>
+        ))}
+      </div>
+    </nav>
   );
 }
 
@@ -720,14 +740,15 @@ function StepHead({
 }) {
   return (
     <div>
-      <button
+      <Button
+                      variant="ghost"
         type="button"
         onClick={onBack}
-        className="min-h-11 font-mono text-xs uppercase tracking-[0.2em] text-muted-foreground hover:text-oxblood"
+        className="min-h-11 font-mono text-xs uppercase tracking-[0.2em] text-green-ink hover:text-oxblood"
       >
         ← Back
-      </button>
-      <p className="font-mono text-xs uppercase tracking-[0.25em] text-oxblood">
+      </Button>
+      <p className="font-mono text-xs uppercase tracking-[0.25em] text-green-ink">
         Step {n}
       </p>
       <h1 className="mt-2 text-5xl leading-[0.95]">{title}</h1>
@@ -745,13 +766,14 @@ function NextButton({
   return (
     <div className="relative mt-10 inline-block">
       <Steam />
-      <button
+      <Button
+                      variant="ghost"
         type="button"
         onClick={onClick}
         className="min-h-12 rounded-sm bg-oxblood px-6 font-display text-xl text-primary-foreground transition-transform hover:-translate-y-0.5"
       >
         {children}
-      </button>
+      </Button>
     </div>
   );
 }

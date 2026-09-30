@@ -30,7 +30,7 @@ function Line({
 }) {
   return (
     <div className="flex items-baseline justify-between gap-4 border-b border-dashed border-foreground/20 py-1.5">
-      <span className="font-mono text-[10px] uppercase tracking-[0.18em] text-muted-foreground">
+      <span className="font-mono text-[10px] uppercase tracking-[0.18em] text-green-ink">
         {label}
       </span>
       <span className="text-right font-mono text-sm text-foreground">
@@ -40,7 +40,7 @@ function Line({
   );
 }
 
-const blank = <span className="text-muted-foreground/60">— — —</span>;
+const blank = <span className="text-muted-foreground">— — —</span>;
 
 export function ClaimTicket({
   draft,
@@ -61,7 +61,7 @@ export function ClaimTicket({
         <div className="flex items-start justify-between">
           <div>
             <p className="font-display text-xl leading-none">Claim Ticket</p>
-            <p className="font-mono text-[10px] uppercase tracking-[0.25em] text-muted-foreground">
+            <p className="font-mono text-[10px] uppercase tracking-[0.25em] text-green-ink">
               Bent Brim Co. · S Congress
             </p>
           </div>
@@ -83,6 +83,7 @@ export function ClaimTicket({
                 curve={draft.shape.curve}
                 pinch={draft.shape.pinch}
                 className="h-5 w-8 opacity-80"
+                branding={draft.branding}
               />
             </span>
           ) : (
@@ -90,7 +91,7 @@ export function ClaimTicket({
           )}
         </Line>
         {draft.shape && <Line label="Brim">{draft.shape.curve < 25 ? "Flat" : draft.shape.curve < 65 ? "Gentle curl" : "High roll"}</Line>}
-        {draft.branding?.text && <Line label="Branding">{draft.branding.text} · {draft.branding.placement === "band" ? "hatband" : "under brim"}</Line>}
+        {draft.branding?.text && <Line label="Branding">{draft.branding.text} · {draft.branding.placement === "band" ? "hatband" : draft.branding.placement === "side" ? "side of hat" : "under brim"}</Line>}
         <Line label="Material">
           {draft.material ? (
             <>
@@ -156,7 +157,7 @@ export function ClaimTicket({
           </div>
         )}
 
-        <p className="mt-4 font-mono text-[10px] uppercase tracking-[0.18em] text-muted-foreground">
+         <p className="mt-4 font-mono text-[10px] uppercase tracking-[0.18em] text-green-ink">
           Keep this half. Sol keeps the other.
         </p>
       </div>
