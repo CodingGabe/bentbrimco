@@ -3,7 +3,7 @@ import { Link } from "@tanstack/react-router";
 export function SiteFooter() {
   return (
     <footer className="mt-20 border-t border-border bg-secondary">
-      <div className="mx-auto grid max-w-7xl gap-8 px-5 py-12 sm:grid-cols-3">
+       <div className="mx-auto grid max-w-7xl gap-8 px-5 py-12 sm:grid-cols-3 sm:gap-10">
         <div>
           <p className="font-display text-3xl uppercase">Bent Brim Co.</p>
           <p className="mt-1 font-mono text-xs text-muted-foreground">
