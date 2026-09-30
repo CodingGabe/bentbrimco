@@ -260,8 +260,8 @@ function Booker() {
                           setSlot(null);
                         }}
                         className={`min-h-11 flex-1 rounded-sm border px-3 capitalize ${
-                          material === m
-                            ? "border-oxblood bg-oxblood text-primary-foreground"
+                           material === m
+                             ? "border-oxblood bg-oxblood text-primary-foreground hover:bg-oxblood hover:text-primary-foreground"
                             : "border-border bg-paper"
                         }`}
                       >
@@ -341,7 +341,7 @@ function Booker() {
                 <legend className="text-xs font-semibold uppercase text-green-ink">Brim profile</legend>
                 <div className="mt-3 grid grid-cols-3 gap-2">
                   {([{ label: "Flat", curve: 15 }, { label: "Gentle curl", curve: 45 }, { label: "High roll", curve: 85 }] as const).map((option) => (
-                    <Button variant="ghost" key={option.label} type="button" aria-pressed={Math.abs(shape.curve - option.curve) < 15} onClick={() => setShape({ ...shape, curve: option.curve, preset: "Your own thing" })} className={`min-h-12 rounded-sm border px-2 text-sm font-medium ${Math.abs(shape.curve - option.curve) < 15 ? "border-foreground bg-green text-foreground" : "border-border bg-paper"}`}>
+                     <Button variant="ghost" key={option.label} type="button" aria-pressed={Math.abs(shape.curve - option.curve) < 15} onClick={() => setShape({ ...shape, curve: option.curve, preset: "Your own thing" })} className={`min-h-12 rounded-sm border px-2 text-sm font-medium ${Math.abs(shape.curve - option.curve) < 15 ? "border-foreground bg-green text-foreground hover:bg-green hover:text-foreground" : "border-border bg-paper"}`}>
                       {option.label}
                     </Button>
                   ))}
@@ -361,12 +361,12 @@ function Booker() {
                 <HatProfile curve={shape.curve} pinch={shape.pinch} branding={branding} className="mx-auto h-56 w-full max-w-md" />
               </div>
               <div className="mt-6 flex flex-wrap gap-2">
-                <Button variant="ghost" type="button" aria-pressed={!branding} onClick={() => setBranding(null)} className={`min-h-11 rounded-sm border px-4 ${!branding ? "border-foreground bg-green text-foreground" : "border-border bg-paper"}`}>No branding</Button>
-                <Button variant="ghost" type="button" aria-pressed={!!branding} onClick={() => setBranding(branding ?? { text: "", placement: "band" })} className={`min-h-11 rounded-sm border px-4 ${branding ? "border-foreground bg-green text-foreground" : "border-border bg-paper"}`}>Add branding</Button>
+                 <Button variant="ghost" type="button" aria-pressed={!branding} onClick={() => setBranding(null)} className={`min-h-11 rounded-sm border px-4 ${!branding ? "border-foreground bg-green text-foreground hover:bg-green hover:text-foreground" : "border-border bg-paper"}`}>No branding</Button>
+                 <Button variant="ghost" type="button" aria-pressed={!!branding} onClick={() => setBranding(branding ?? { text: "", placement: "band" })} className={`min-h-11 rounded-sm border px-4 ${branding ? "border-foreground bg-green text-foreground hover:bg-green hover:text-foreground" : "border-border bg-paper"}`}>Add branding</Button>
               </div>
               {branding && <div className="mt-6 max-w-md space-y-5">
                 <div><label htmlFor="brand-text" className="text-xs font-semibold uppercase text-green-ink">Initials or short name</label><input id="brand-text" maxLength={12} value={branding.text} onChange={(e) => setBranding({ ...branding, text: e.target.value })} placeholder="e.g. J.R." className="mt-2 min-h-12 w-full rounded-sm border border-border bg-paper px-3" /></div>
-                <fieldset><legend className="text-xs font-semibold uppercase text-green-ink">Placement</legend><div className="mt-2 grid grid-cols-3 gap-2">{([{ value: "band", label: "Hatband" }, { value: "side", label: "Side of hat" }, { value: "underbrim", label: "Under brim" }] as const).map((p) => <Button variant="ghost" key={p.value} type="button" aria-pressed={branding.placement === p.value} onClick={() => setBranding({ ...branding, placement: p.value })} className={`min-h-11 flex-1 rounded-sm border px-3 ${branding.placement === p.value ? "border-foreground bg-green text-foreground" : "border-border bg-paper"}`}>{p.label}</Button>)}</div></fieldset>
+                 <fieldset><legend className="text-xs font-semibold uppercase text-green-ink">Placement</legend><div className="mt-2 grid grid-cols-3 gap-2">{([{ value: "band", label: "Hatband" }, { value: "side", label: "Side of hat" }, { value: "underbrim", label: "Under brim" }] as const).map((p) => <Button variant="ghost" key={p.value} type="button" aria-pressed={branding.placement === p.value} onClick={() => setBranding({ ...branding, placement: p.value })} className={`min-h-11 flex-1 rounded-sm border px-3 ${branding.placement === p.value ? "border-foreground bg-green text-foreground hover:bg-green hover:text-foreground" : "border-border bg-paper"}`}>{p.label}</Button>)}</div></fieldset>
               </div>}
               <NextButton onClick={() => setStep(4)}>Next: pick a time</NextButton>
             </section>
@@ -385,7 +385,7 @@ function Booker() {
                       setHasDeadline(false);
                       setSlot(null);
                     }}
-                    className={`min-h-11 rounded-sm border px-4 ${!hasDeadline ? "border-oxblood bg-oxblood text-primary-foreground" : "border-border"}`}
+                     className={`min-h-11 rounded-sm border px-4 ${!hasDeadline ? "border-oxblood bg-oxblood text-primary-foreground hover:bg-oxblood hover:text-primary-foreground" : "border-border"}`}
                   >
                     No hard date
                   </Button>
@@ -403,7 +403,7 @@ function Booker() {
                             .slice(0, 10),
                         );
                     }}
-                    className={`min-h-11 rounded-sm border px-4 ${hasDeadline ? "border-oxblood bg-oxblood text-primary-foreground" : "border-border"}`}
+                     className={`min-h-11 rounded-sm border px-4 ${hasDeadline ? "border-oxblood bg-oxblood text-primary-foreground hover:bg-oxblood hover:text-primary-foreground" : "border-border"}`}
                   >
                     I need it by…
                   </Button>
@@ -465,7 +465,7 @@ function Booker() {
                                 style={{ animationDelay: `${i * 40}ms` }}
                                 className={`animate-tag min-h-11 rounded-sm border px-3 py-2 text-left font-mono text-sm ${
                                   active
-                                    ? "border-oxblood bg-oxblood text-primary-foreground"
+                                     ? "border-oxblood bg-oxblood text-primary-foreground hover:bg-oxblood hover:text-primary-foreground"
                                     : "border-border bg-paper hover:border-oxblood/60"
                                 }`}
                               >
